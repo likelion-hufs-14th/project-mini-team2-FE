@@ -28,6 +28,3 @@ npm run dev      # 개발 서버 실행 (http://localhost:5173)
 
 - 컴포넌트와 스타일은 `Xxx.jsx` + `Xxx.module.css`를 같은 폴더에 둔다.
 - 브랜치는 `feat/기능명` 형태로 파고, main에 직접 push 금지 → PR로 머지.
-
-> 폴더 구조(pages/components 등)와 라우팅 구성은 두 분이 함께 정한 뒤 채워주세요.
-> 현재 레포에는 **공통 환경 세팅만** 들어있습니다.
