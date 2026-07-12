@@ -1,6 +1,28 @@
-:root {
 
+:root {
+  /* --- 배경 / 표면 --- */
+  --color-bg: #17120f;
+  --color-surface: #241d18;
+
+  /* --- 불꽃 (포인트 컬러) --- 피그마 값 --- */
+  --color-flame: #ff7400;
+  --color-flame-soft: #ffab5c;
+  --gradient-flame: linear-gradient(180deg, #ffab5c 0%, #ff7400 100%);
+
+  /* --- 소각 버튼 --- */
+  --color-danger: #c0261f;
+
+  /* --- 종이 --- */
+  --color-paper: #f2e6cf;
+  --color-paper-ink: #2a2320;
+
+  /* --- 텍스트 --- */
+  --color-text: #f5f0ea;
+  --color-text-muted: #9a8f86;
+  /* --- 폰트 --- 피그마: Noto Sans --- */
+  --font-base: 'Noto Sans KR', 'Noto Sans', system-ui, sans-serif;
 }
+
 
 * {
   box-sizing: border-box;
@@ -10,5 +32,12 @@
 
 body {
   min-height: 100dvh;
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-base);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
 }

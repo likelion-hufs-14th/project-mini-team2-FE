@@ -1,0 +1,44 @@
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+}
+
+.logo {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: var(--color-surface);
+  border-radius: 10px;
+  font-size: 1.4rem;
+  text-decoration: none;
+}
+
+.notice {
+  flex: 1;
+  text-align: center;
+  color: var(--color-flame);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.menu {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #4a4038;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-text);
+  font-size: 1.2rem;
+}
+
+@media (max-width: 640px) {
+  .notice {
+    font-size: 0.72rem;
+  }
+}

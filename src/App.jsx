@@ -5,6 +5,10 @@ import WritePage from './pages/Write/WritePage';
 import EndPage from './pages/End/EndPage';
 import FeedPage from './pages/Feed/FeedPage';
 import DetailPage from './pages/Detail/DetailPage';
+import NoticePage from './pages/Notice/NoticePage';
+import NoticeDetailPage from './pages/Notice/NoticeDetailPage';
+
+
 
 function App() {
   return (
@@ -14,6 +18,8 @@ function App() {
       <Route path={PATHS.END} element={<EndPage />} />
       <Route path={PATHS.FEED} element={<FeedPage />} />
       <Route path={PATHS.DETAIL} element={<DetailPage />} />
+      <Route path={PATHS.NOTICE} element={<NoticePage />} />
+      <Route path={PATHS.NOTICE_DETAIL} element={<NoticeDetailPage />} />
     </Routes>
   );
 }
