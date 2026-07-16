@@ -1,27 +1,28 @@
-
 :root {
-  /* --- 배경 / 표면 --- */
-  --color-bg: #17120f;
-  --color-surface: #241d18;
+  /* 기획시스템 색상 */
+  --color-flame: #ff7400; /* 모든 주황색 */
+  --color-notice: #e0cdcd; /* 안내문구 */
+  --color-time-bg: #e6e6e6; /* 남은 시간 배경 */
+  --color-sidebar-text: #9a9fab; /* 사이드바 아이콘과 텍스트, 댓글창 안내문구 */
+  --color-feed-text: #5b5b5b; /* 피드 텍스트, 댓글 스크롤바 */
+  --color-sort-btn: #ccb591; /* 정렬 버튼 */
+  --color-comment-bg: #ecdec9; /* 댓글 배경 */
+  --color-sidebar: #1a1d24; /* 사이드바 색상 */
 
-  /* --- 불꽃 (포인트 컬러) --- 피그마 값 --- */
-  --color-flame: #ff7400;
-  --color-flame-soft: #ffab5c;
-  --gradient-flame: linear-gradient(180deg, #ffab5c 0%, #ff7400 100%);
+  /* 화면 색상 */
+  --color-bg: #17120f; /* 전체 배경 */
+  --color-surface: #241d18; /* 카드,면 */
+  --color-flame-soft: #ffab5c; /* 밝은 주황-그라데이션 */
+  --color-danger: #c0261f; /* 소각 버튼 빨강 */
+  --color-paper: #f2e6cf; /* 메모 종이 */
+  --color-paper-ink: #2a2320; /* 종이 위 글자 */
+  --color-text: #f5f0ea; /* 기본 밝은 글자 */
+  --color-text-muted: #9a8f86; /* 흐린 글자 */
 
-  /* --- 소각 버튼 --- */
-  --color-danger: #c0261f;
-
-  /* --- 종이 --- */
-  --color-paper: #f2e6cf;
-  --color-paper-ink: #2a2320;
-
-  /* --- 텍스트 --- */
-  --color-text: #f5f0ea;
-  --color-text-muted: #9a8f86;
-  /* --- 폰트 --- 피그마: Noto Sans --- */
-  --font-base: 'Noto Sans KR', 'Noto Sans', system-ui, sans-serif;
+  /* 폰트SUIT */
+  --font-base: "SUIT Variable", system-ui, sans-serif;
 }
+
 
 
 * {

@@ -8,7 +8,7 @@
 
 .title {
   margin-top: 20px;
-  color: #fff;
+  color: var(--color-notice); 
   font-size: 1.4rem;
   font-weight: 700;
   text-align: center;
@@ -34,8 +34,8 @@
   background: transparent;
   resize: none;
   outline: none;
-  font-family: inherit;
-  font-size: 1.05rem;
+  font-family: "Kim jung chul Script","Nanum Pen Script",cursive;
+  font-size: 1.6rem;
   line-height: 1.7;
   color: var(--color-paper-ink);
 }
