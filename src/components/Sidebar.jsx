@@ -4,98 +4,86 @@ import { useNavigate } from 'react-router-dom';
 export default function Sidebar({ isOpen, onClose }) {
     const navigate = useNavigate();
 
-    if (!isOpen) return null;
+    const handleNavigation = (path) => {
+        navigate(path);
+        onClose();
+    };
 
     return (
         <>
-            <div
-                onClick={onClose}
-                style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: 'rgba(0,0,0,0.6)',
-                    zIndex: 999,
-                }}
-            />
+            {isOpen && (
+                <div
+                    onClick={onClose}
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100vw',
+                        height: '100vh',
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        zIndex: 999,
+                    }}
+                />
+            )}
 
             <div
                 style={{
                     position: 'fixed',
                     top: 0,
-                    right: 0,
-                    bottom: 0,
-                    width: '260px',
+                    right: isOpen ? 0 : '-300px',
+                    width: '250px',
+                    height: '100vh',
                     backgroundColor: '#1A1D24',
-                    zIndex: 1000,
-                    padding: '20px',
-                    display: 'flex',
-                    flexDirection: 'column',
                     color: '#9A9FAB',
-                    boxShadow: '-4px 0 15px rgba(0,0,0,0.5)',
+                    transition: 'right 0.3s ease-in-out',
+                    zIndex: 1000,
+                    padding: '30px 20px',
+                    boxSizing: 'border-box',
                 }}
             >
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '30px' }}>
-                    <button
-                        onClick={onClose}
+                <div
+                    onClick={onClose}
+                    style={{
+                        cursor: 'pointer',
+                        fontSize: '24px',
+                        marginBottom: '40px',
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
+                    &gt;
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    <div
+                        onClick={() => handleNavigation('/write')}
                         style={{
-                            background: 'transparent',
-                            border: 'none',
-                            color: '#9A9FAB',
-                            fontSize: '20px',
                             cursor: 'pointer',
+                            fontSize: '18px',
+                            fontWeight: 700,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px',
                         }}
                     >
-                        〉
-                    </button>
-                </div>
+                        <span>✏️</span>
+                        <span>글쓰기</span>
+                    </div>
 
-                <div
-                    onClick={() => {
-                        navigate('/write');
-                        onClose();
-                    }}
-                    style={{
-                        padding: '15px 0',
-                        borderBottom: '1px solid #333',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        gap: '10px',
-                        alignItems: 'center',
-                        fontWeight: 'bold',
-                    }}
-                >
-                    <span style={{ fontSize: '18px' }}>✏️</span> 글쓰기
-                </div>
-
-                <div
-                    onClick={() => {
-                        navigate('/feed');
-                        onClose();
-                    }}
-                    style={{
-                        padding: '15px 0',
-                        borderBottom: '1px solid #333',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        gap: '10px',
-                        alignItems: 'center',
-                        fontWeight: 'bold',
-                    }}
-                >
-                    <span style={{ fontSize: '18px' }}>🧱</span> 피드
-                </div>
-
-                <div style={{ marginTop: 'auto', fontSize: '11px', color: '#5B5B5B', lineHeight: '1.8' }}>
-                    Privacy Policy
-                    <br />
-                    Terms & Conditions
-                    <br />
-                    Cookie Policy
-                    <br />
-                    Contact
+                    <div
+                        onClick={() => handleNavigation('/')}
+                        style={{
+                            cursor: 'pointer',
+                            fontSize: '18px',
+                            fontWeight: 700,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px',
+                        }}
+                    >
+                        <span>🗂️</span>
+                        <span>피드</span>
+                    </div>
                 </div>
             </div>
         </>

@@ -11,26 +11,25 @@ export default function Header({ onMenuClick }) {
                 padding: '15px 20px',
                 width: '100%',
                 boxSizing: 'border-box',
-                backgroundColor: '#121212',
+                background: 'transparent',
             }}
         >
             <div style={{ width: '40px', height: '40px' }}>
                 <img src={logo} alt="Insiner Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
 
-            <p
+            <div
                 style={{
-                    color: '#FF7400',
-                    fontSize: '12px',
+                    color: '#FF7A00',
+                    fontSize: '18px',
                     fontWeight: '700',
-                    margin: 0,
+                    letterSpacing: '-0.5px',
                     textAlign: 'center',
                     flex: 1,
-                    padding: '0 15px',
                 }}
             >
                 ※ 본 서비스는 어떠한 데이터도 백업하지 않으며, 소각 즉시 서버에서 완전히 영구 삭제됩니다 ※
-            </p>
+            </div>
 
             <button
                 onClick={onMenuClick}
@@ -43,6 +42,10 @@ export default function Header({ onMenuClick }) {
                     borderRadius: '6px',
                     cursor: 'pointer',
                     fontSize: '22px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingBottom: '4px',
                 }}
             >
                 ≡

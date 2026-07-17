@@ -1,19 +1,18 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import FeedPage from './pages/Feed/FeedPage';
 import DetailPage from './pages/Detail/DetailPage';
 
-function App() {
+export default function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<div>INCINER</div>} />
+                <Route path="/" element={<FeedPage />} />
+
                 <Route path="/feed" element={<FeedPage />} />
 
-                <Route path="/feed/:id" element={<DetailPage />} />
+                <Route path="/detail/:id" element={<DetailPage />} />
             </Routes>
         </BrowserRouter>
     );
 }
-
-export default App;

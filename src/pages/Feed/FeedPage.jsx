@@ -5,6 +5,7 @@ import feedBg from '../../assets/feed.png';
 import { getFeeds } from '../../apis/posts';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
+import detail from '../../assets/feed.png';
 
 export default function FeedPage() {
     const [feeds, setFeeds] = useState([]);
@@ -24,24 +25,22 @@ export default function FeedPage() {
 
     return (
         <div
-            className={styles.feedContainer}
             style={{
-                backgroundImage: `url(${feedBg})`,
+                backgroundImage: `url(${detail})`,
                 backgroundSize: 'cover',
-                backgroundPosition: 'center',
+                backgroundPosition: 'top center',
                 backgroundAttachment: 'fixed',
                 minHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
+                padding: '20px',
             }}
         >
             <Header onMenuClick={() => setIsSidebarOpen(true)} />
             <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
-            <div style={{ flex: 1, maxWidth: '900px', margin: '0 auto', width: '100%', padding: '20px' }}>
+            <div style={{ maxWidth: '800px', margin: '80px auto' }}>
                 {feeds.length === 0 ? (
                     <div style={{ color: '#E0CDCD', textAlign: 'center', marginTop: '100px' }}>
-                        <h2 style={{ color: '#FF7400', fontWeight: '800' }}>아직 타오르는 이야기가 없습니다.</h2>
+                        <h2 style={{ color: '#FF7400', fontWeight: '800' }}>아직 이야기가 없습니다.</h2>
                         <p style={{ color: '#9A9FAB' }}>첫 번째 이야기의 주인공이 되어보세요 🪵</p>
                     </div>
                 ) : (
