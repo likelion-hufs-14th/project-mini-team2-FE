@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import logoImg from "../../assets/INCINER.png";
 import fireImg from "../../assets/fire.png";
 import paperImg from "../../assets/paper.png";
 import styles from "./StartPage.module.css";
@@ -11,10 +12,7 @@ function StartPage() {
     <div className={styles.page}>
       <div className={styles.stage}>
 
-        <div className={styles.brand}>
-          <h1 className={styles.logo}>INCINER</h1>
-          <p className={styles.slogan}>Burn what's in your mind</p>
-        </div>
+        <img className={styles.logo} src={logoImg} alt="INCINER" />
 
         <img className={styles.fire} src={fireImg} />
 

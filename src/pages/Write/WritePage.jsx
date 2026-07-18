@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TopBar from "../../components/TopBar/TopBar";
+import { createFeed } from "../../apis/feeds";
+import { getNickname } from "../../utils/nickname";
 import redCircle from "../../assets/redcircle.png";
 import blueCircle from "../../assets/bluecircle.png";
 import firePaper from "../../assets/firepaper.png";
@@ -19,6 +21,17 @@ function WritePage() {
     setTimeout(() => navigate("/end"), 2000);
   }
 
+
+// 피드 저장 글
+  async function handleFeed() {
+    if (!text) return;
+    
+    await createFeed({ nickname: getNickname(), content: text });
+    navigate("/feed");
+  }
+
+
+  
   return (
     <div className={styles.page}>
       <TopBar />
@@ -47,7 +60,7 @@ function WritePage() {
         </button>
 
 
-        <button className={styles.circleBtn} onClick={() => navigate("/feed")}>
+        <button className={styles.circleBtn} onClick={handleFeed}>
           <img src={blueCircle} />
           <span>피드</span>
         </button>
