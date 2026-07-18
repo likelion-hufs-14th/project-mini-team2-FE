@@ -1,0 +1,23 @@
+/* 전체 댓글 */
+.container {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: #ecdec9;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* 댓글 작성자 닉네임 */
+.nickname {
+    color: #9a9fab;
+    min-width: 80px;
+    font-weight: 600;
+}
+
+/* 댓글 내용 */
+.content {
+    margin: 0;
+    color: #5b5b5b;
+    line-height: 1.5;
+}
