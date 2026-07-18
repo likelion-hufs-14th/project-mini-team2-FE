@@ -1,51 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import FeedCard from './FeedCard';
 import styles from './FeedPage.module.css';
-import feedBg from '../../assets/feed.png';
 import { getFeeds } from '../../apis/posts';
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
-import detail from '../../assets/feed.png';
+import TopBar from '../../components/TopBar/TopBar';
+import memo from '../../assets/memo.png';
+import backIcon from '../../assets/back.png';
 
 export default function FeedPage() {
-    const [feeds, setFeeds] = useState([]);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [pageData, setPageData] = useState({ results: [], next: null });
+    const [page, setPage] = useState(1);
 
+    // 피드 목록 불러오기
     useEffect(() => {
-        const fetchFeeds = async () => {
+        const loadFeeds = async () => {
+            const data = await getFeeds(page);
+            setPageData(data);
+        };
+        loadFeeds();
+    }, [page]);
+
+    // 방문 기록 API
+    useEffect(() => {
+        /*
+        const recordVisit = async () => {
             try {
-                const data = await getFeeds();
-                setFeeds(data);
+                await fetch('http://백엔드주소/feeds/visit/', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
             } catch (error) {
-                console.error('서버 연동 실패:', error);
+                console.error('방문 기록 전송 실패:', error);
             }
         };
-        fetchFeeds();
+        recordVisit();
+        */
     }, []);
 
+    // 화면 렌더링(그리드형태, 페이지네이션)
     return (
-        <div
-            style={{
-                backgroundImage: `url(${detail})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'top center',
-                backgroundAttachment: 'fixed',
-                minHeight: '100vh',
-                padding: '20px',
-            }}
-        >
-            <Header onMenuClick={() => setIsSidebarOpen(true)} />
-            <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+        <div className={styles.pageContainer}>
+            <TopBar />
+            <div className={styles.feedGrid}>
+                {pageData.results.map((data) => (
+                    <FeedCard key={data.feed_id} data={data} />
+                ))}
+            </div>
+            <div className={styles.pagination}>
+                <button className={styles.pageButton} disabled={page === 1} onClick={() => setPage((prev) => prev - 1)}>
+                    <img src={backIcon} alt="이전" className={styles.arrowIcon} />
+                </button>
 
-            <div style={{ maxWidth: '800px', margin: '80px auto' }}>
-                {feeds.length === 0 ? (
-                    <div style={{ color: '#E0CDCD', textAlign: 'center', marginTop: '100px' }}>
-                        <h2 style={{ color: '#FF7400', fontWeight: '800' }}>아직 이야기가 없습니다.</h2>
-                        <p style={{ color: '#9A9FAB' }}>첫 번째 이야기의 주인공이 되어보세요 🪵</p>
-                    </div>
-                ) : (
-                    feeds.map((data) => <FeedCard key={data.feed_id} data={data} />)
-                )}
+                <span className={styles.pageNumber}>{page} 페이지</span>
+
+                <button
+                    className={styles.pageButton}
+                    disabled={!pageData.next}
+                    onClick={() => setPage((prev) => prev + 1)}
+                >
+                    <img src={backIcon} alt="다음" className={`${styles.arrowIcon} ${styles.rotatedArrow}`} />
+                </button>
             </div>
         </div>
     );

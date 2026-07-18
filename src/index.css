@@ -1,16 +1,51 @@
-/* 팀 공용 전역 스타일 */
-/* 색상/폰트 등 공통 테마는 두 분이 정한 뒤 아래 변수에 채워주세요. */
+/* index.css 상단 추가 */
+@font-face {
+    font-family: 'KimjungchulScript-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulScript-Regular.woff2')
+        format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
 :root {
-  /* 예) --color-flame: #ff6a1a; */
+    /* 기획시스템 색상 */
+    --color-flame: #ff7400; /* 모든 주황색 */
+    --color-notice: #e0cdcd; /* 안내문구 */
+    --color-time-bg: #e6e6e6; /* 남은 시간 배경 */
+    --color-sidebar-text: #9a9fab; /* 사이드바 아이콘과 텍스트, 댓글창 안내문구 */
+    --color-feed-text: #5b5b5b; /* 피드 텍스트, 댓글 스크롤바 */
+    --color-sort-btn: #ccb591; /* 정렬 버튼 */
+    --color-comment-bg: #ecdec9; /* 댓글 배경 */
+    --color-sidebar: #1a1d24; /* 사이드바 색상 */
+
+    /* 화면 색상 */
+    --color-bg: #17120f; /* 전체 배경 */
+    --color-surface: #241d18; /* 카드,면 */
+    --color-flame-soft: #ffab5c; /* 밝은 주황-그라데이션 */
+    --color-danger: #c0261f; /* 소각 버튼 빨강 */
+    --color-paper: #f2e6cf; /* 메모 종이 */
+    --color-paper-ink: #2a2320; /* 종이 위 글자 */
+    --color-text: #f5f0ea; /* 기본 밝은 글자 */
+    --color-text-muted: #9a8f86; /* 흐린 글자 */
+
+    /* 폰트SUIT */
+    --font-base: 'SUIT Variable', system-ui, sans-serif;
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  min-height: 100dvh;
-  font-family: system-ui, sans-serif;
+    min-height: 100dvh;
+    font-family: var(--font-base);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
 }
