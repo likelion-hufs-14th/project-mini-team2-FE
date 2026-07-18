@@ -7,8 +7,6 @@ import styles from './Sidebar.module.css';
 const MENU = [
     { icon: FiEdit3, label: '글쓰기', to: PATHS.WRITE },
     { icon: FiList, label: '피드', to: PATHS.FEED },
-    { icon: FiBell, label: '공지사항', to: PATHS.NOTICE },
-    { icon: FiInfo, label: '문의', to: null },
 ];
 
 function Sidebar({ open, onClose }) {
@@ -36,6 +34,13 @@ function Sidebar({ open, onClose }) {
                         )
                     )}
                 </nav>
+
+                <footer className={styles.footer}>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms &amp; Conditions</a>
+                    <a href="#">Cookie Policy</a>
+                    <a href="#">Contact</a>
+                </footer>
             </aside>
         </>
     );

@@ -111,7 +111,6 @@ export default function DetailPage() {
             myNick = input.slice(0, 6);
             localStorage.setItem('my_nickname', myNick);
         }
-
         const likeKey = `like_${myNick}_${id}`;
         const dislikeKey = `dislike_${myNick}_${id}`;
         const currentLikes = parseInt(localStorage.getItem(likeKey) || 0);
@@ -152,7 +151,6 @@ export default function DetailPage() {
             myNick = input.slice(0, 6);
             localStorage.setItem('my_nickname', myNick);
         }
-
         const likeKey = `like_${myNick}_${id}`;
         const dislikeKey = `dislike_${myNick}_${id}`;
         const currentLikes = parseInt(localStorage.getItem(likeKey) || 0);

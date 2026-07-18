@@ -1,8 +1,8 @@
 import { api } from './client';
 
 // 피드 전체 가져오기
-export async function getFeeds() {
-    const res = await api.get('/feeds');
+export async function getFeeds(page = 1) {
+    const res = await api.get(`/feeds?page=${page}`);
     return res.data;
 }
 
@@ -39,5 +39,11 @@ export async function getComments(id) {
 // 댓글 달기
 export async function createComment(id, { nickname, content }) {
     const res = await api.post(`/feeds/${id}/comments`, { nickname, content });
+    return res.data;
+}
+
+// 사이트 이용 기록 남기기 (오늘 몇 명이 소각했는지용)
+export async function recordVisit() {
+    const res = await api.post('/feeds/visit/');
     return res.data;
 }

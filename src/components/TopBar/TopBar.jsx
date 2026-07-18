@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../routes/paths';
 import Sidebar from '../Sidebar/Sidebar';
-import logoIcon from '../../assets/insiner_logo_icon.png';
+import logoIcon from '../../assets/INCINER_LOGO.png';
 import listIcon from '../../assets/list.png';
 import styles from './TopBar.module.css';
 
