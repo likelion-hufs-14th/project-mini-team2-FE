@@ -1,87 +1,73 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import TopBar from "../../components/TopBar/TopBar";
-import { createFeed } from "../../apis/feeds";
-import { getNickname } from "../../utils/nickname";
-import redCircle from "../../assets/redcircle.png";
-import blueCircle from "../../assets/bluecircle.png";
-import firePaper from "../../assets/firepaper.png";
-import styles from "./WritePage.module.css";
-
-
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import TopBar from '../../components/TopBar/TopBar';
+import { createFeed } from '../../apis/feeds';
+import { getNickname } from '../../utils/nickname';
+import redCircle from '../../assets/redcircle.png';
+import blueCircle from '../../assets/bluecircle.png';
+import firePaper from '../../assets/firepaper.png';
+import styles from './WritePage.module.css';
 
 // 2) 작성 페이지
 function WritePage() {
-  const navigate = useNavigate();
-  const [text, setText] = useState("");
-  const [burning, setBurning] = useState(false);
+    const navigate = useNavigate();
+    const [text, setText] = useState('');
+    const [burning, setBurning] = useState(false);
 
-  function handleBurn() {
-    setBurning(true);
-    setTimeout(() => navigate("/end"), 2000);
-  }
-
-
-// 피드 저장 글
-  async function handleFeed() {
-    if (!text) return;
-
-    try {
-      await createFeed({ nickname: getNickname(), content: text });
-      navigate("/feed");
-    } catch (error) {
-      console.log(error);
-      window.alert("피드에 올리지 못했어요. 서버를 확인해주세요.");
+    function handleBurn() {
+        setBurning(true);
+        setTimeout(() => navigate('/end'), 2000);
     }
-  }
 
+    // 피드 저장 글
+    async function handleFeed() {
+        if (!text) return;
 
-  
-  return (
-    <div className={styles.page}>
-      <TopBar />
+        try {
+            await createFeed({ nickname: getNickname(), content: text });
+            navigate('/feed');
+        } catch (error) {
+            console.log(error);
+            window.alert('피드에 올리지 못했어요. 서버를 확인해주세요.');
+        }
+    }
 
-      <h2 className={styles.title}>태워 버리고 싶은 당신의 속마음을 말해보세요.</h2>
+    return (
+        <div className={styles.page}>
+            <TopBar />
 
-      <div className={styles.paper}>
+            <h2 className={styles.title}>태워 버리고 싶은 당신의 속마음을 말해보세요.</h2>
 
+            <div className={styles.paper}>
+                <textarea
+                    className={styles.input}
+                    maxLength={300}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                />
 
-        <textarea
-          className={styles.input}
-          maxLength={300}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
+                <span className={styles.counter}>{text.length}/300</span>
+            </div>
 
+            <div className={styles.actions}>
+                <button className={styles.circleBtn} onClick={handleBurn}>
+                    <img src={redCircle} />
+                    <span>소각</span>
+                </button>
 
-        <span className={styles.counter}>{text.length}/300</span>
-      </div>
+                <button className={styles.circleBtn} onClick={handleFeed}>
+                    <img src={blueCircle} />
+                    <span>피드</span>
+                </button>
+            </div>
 
-      <div className={styles.actions}>
-
-        <button className={styles.circleBtn} onClick={handleBurn}>
-          <img src={redCircle} />
-          <span>소각</span>
-        </button>
-
-
-        <button className={styles.circleBtn} onClick={handleFeed}>
-          <img src={blueCircle} />
-          <span>피드</span>
-        </button>
-
-
-      </div>
-
-      {burning && (
-        <div className={styles.burnOverlay}>
-          <img className={styles.burnPaper} src={firePaper} />
+            {burning && (
+                <div className={styles.burnOverlay}>
+                    <img className={styles.burnPaper} src={firePaper} />
+                </div>
+            )}
         </div>
-      )}
-
-
-    </div>
-  );
+    );
 }
 
 export default WritePage;

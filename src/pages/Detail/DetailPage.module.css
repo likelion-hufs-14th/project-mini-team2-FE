@@ -72,30 +72,33 @@
     align-items: center;
 }
 
+/* 메모 작성자 */
 .nickname {
     margin-top: 5px;
-    color: #333;
+    color: var(--color-feed-text);
     font-weight: 700;
     font-size: 16px;
 }
 
+/* 남은 시간 배경 */
 .timerBox {
-    border: 1px solid #ff3b00;
-    color: #ff3b00;
+    border: 1px solid var(--color-flame);
+    background-color: var(--color-time-bg);
+    color: var(--color-flame);
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 13px;
-    font-family: 'SUIT Bold', sans-serif;
-    font-weight: 600;
+    font-family: var(--font-base);
+    font-weight: 700;
     display: flex;
     align-items: center;
     gap: 4px;
 }
 
 .content {
-    font-family: 'KimjungchulScript-Regular', cursive;
+    font-family: var(--font-script);
     font-size: 18px;
-    color: #222;
+    color: var(--color-feed-text);
     margin-top: 15px;
     line-height: 1.5;
 }
@@ -130,20 +133,21 @@
 }
 
 .countText {
-    color: #333;
+    color: var(--color-feed-text);
     font-size: 15px;
     margin-left: 6px;
     font-weight: 600;
 }
 
+/*댓글 버튼 */
 .commentToggleBtn {
     background: transparent;
-    border: 1px solid #555;
+    border: 1px solid var(--color-feed-text);
     border-radius: 6px;
     padding: 6px 12px;
     font-size: 14px;
     font-weight: bold;
-    color: #333;
+    color: var(--color-feed-text);
     cursor: pointer;
     font-family: inherit;
     transition: background 0.2s;
@@ -156,7 +160,7 @@
 .progressContainer {
     width: 100%;
     height: 8px;
-    background: #111;
+    background: var(--color-progress-bg);
     border-radius: 4px;
     position: relative;
     overflow: hidden;
@@ -167,7 +171,7 @@
     left: 0;
     top: 0;
     height: 100%;
-    background: #ff7400;
+    background: var(--color-flame);
     transition: width 0.3s ease-in-out;
 }
 
@@ -176,7 +180,7 @@
     right: 0;
     top: 0;
     height: 100%;
-    background: #333;
+    background-color: var(--color-progress-bg);
     transition: width 0.3s ease-in-out;
 }
 
@@ -186,7 +190,7 @@
     max-width: 95vw;
     height: 380px;
     margin-top: 16px;
-    background: #ccb591;
+    background: var(--color-sort-btn);
     padding: 25px;
     border-radius: 8px;
     display: flex;
@@ -205,60 +209,41 @@
     min-height: 0;
 }
 
+/*스크롤바 */
 .commentsList::-webkit-scrollbar {
     width: 8px;
 }
 .commentsList::-webkit-scrollbar-thumb {
-    background-color: #5d5d5d;
+    background-color: var(--color-feed-text);
     border-radius: 10px;
 }
 .commentsList::-webkit-scrollbar-track {
     background: transparent;
 }
 
-.commentItemWrapper {
-    background: #ecdec9;
-    padding: 14px 16px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.commentAuthor {
-    font-weight: 700;
-    color: #111;
-    white-space: nowrap;
-}
-
-.commentText {
-    font-weight: 400;
-    color: #222;
-    line-height: 1.5;
-}
-
+/* 입력창 */
 .inputWrapper {
     display: flex;
     align-items: center;
     margin-top: 15px;
-    background: #fafaf7;
+    background: #f6f2ea;
     padding: 10px 15px;
     border-radius: 6px;
-    border: 1px solid #dfd5bd;
+    border: 1px solid #f6f2ea;
 }
 
 .commentInput {
     flex: 1;
     background: transparent;
     border: none;
-    color: #333;
+    color: var(--color-feed-text);
     font-size: 14px;
     font-weight: 400;
     outline: none;
 }
 
 .commentInput::placeholder {
-    color: #a39e92;
+    color: var(--color-sidebar-text);
 }
 
 .iconButton {
