@@ -25,9 +25,14 @@ function WritePage() {
 // 피드 저장 글
   async function handleFeed() {
     if (!text) return;
-    
-    await createFeed({ nickname: getNickname(), content: text });
-    navigate("/feed");
+
+    try {
+      await createFeed({ nickname: getNickname(), content: text });
+      navigate("/feed");
+    } catch (error) {
+      console.log(error);
+      window.alert("피드에 올리지 못했어요. 서버를 확인해주세요.");
+    }
   }
 
 
