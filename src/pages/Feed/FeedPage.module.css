@@ -1,0 +1,79 @@
+/* 하단 페이지네이션 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 50px 0;
+    width: 100%;
+}
+
+/* 페이지 이동 버튼 */
+.pageButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 피드 페이지 배경 */
+.pageContainer {
+    background-image: url('../../assets/feed.png');
+    background-repeat: repeat;
+    background-size: auto;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* 피드 카드 스타일 */
+.card {
+    background-image: url('../../assets/memo.png');
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    box-sizing: border-box;
+    transition: transform 0.2s;
+}
+
+/* 화살표 아이콘 */
+.arrowIcon {
+    width: 32px;
+    height: 32px;
+    filter: invert(56%) sepia(87%) saturate(2255%) hue-rotate(345deg) brightness(102%) contrast(101%);
+}
+
+/* 다음 버튼 */
+.rotatedArrow {
+    transform: rotate(180deg);
+}
+
+/* 현재 페이지 */
+.pageNumber {
+    color: #e0cdcd;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'SUIT Bold', sans-serif;
+}
+
+.pageButton:disabled .arrowIcon {
+    filter: invert(30%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(95%) contrast(85%);
+    cursor: not-allowed;
+}
+
+/* 3열 레이아웃 */
+.feedGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, auto);
+    gap: 20px;
+    padding: 0 40px;
+}

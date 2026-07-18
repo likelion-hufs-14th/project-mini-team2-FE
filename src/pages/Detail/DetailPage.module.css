@@ -1,0 +1,340 @@
+/* 전체 레이아웃 */
+.pageContainer {
+    background-size: cover;
+    background-position: top center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contentWrapper {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+    gap: 20px;
+    position: relative;
+}
+
+/* 상단 뒤로가기 */
+.topNav {
+    position: absolute;
+    left: -120px;
+    top: 0;
+}
+
+@media (max-width: 850px) {
+    .topNav {
+        position: static;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: -10px;
+    }
+}
+
+.backButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.backIcon {
+    width: auto;
+    height: 30px;
+}
+
+/*메모 영역 */
+.memoContainer {
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 1 / 1;
+    min-height: unset;
+    margin: 0;
+    padding: 30px;
+    box-sizing: border-box;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nickname {
+    margin-top: 5px;
+    color: #333;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.timerBox {
+    border: 1px solid #ff3b00;
+    color: #ff3b00;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'SUIT Bold', sans-serif;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.content {
+    font-family: 'KimjungchulScript-Regular', cursive;
+    font-size: 18px;
+    color: #222;
+    margin-top: 15px;
+    line-height: 1.5;
+}
+
+/*공감,비공감액션 & 게이지바 */
+.reactionRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.reactionGroup {
+    display: flex;
+}
+
+.actionButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.dislikeButton {
+    margin-left: 15px;
+}
+
+.buttonIcon {
+    width: 26px;
+}
+
+.countText {
+    color: #333;
+    font-size: 15px;
+    margin-left: 6px;
+    font-weight: 600;
+}
+
+.commentToggleBtn {
+    background: transparent;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.commentToggleBtn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.progressContainer {
+    width: 100%;
+    height: 8px;
+    background: #111;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progressLeft {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #ff7400;
+    transition: width 0.3s ease-in-out;
+}
+
+.progressRight {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background: #333;
+    transition: width 0.3s ease-in-out;
+}
+
+/* 하단 댓글 */
+.commentsSection {
+    width: 900px;
+    max-width: 95vw;
+    height: 380px;
+    margin-top: 16px;
+    background: #ccb591;
+    padding: 25px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.commentsList {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 8px;
+    min-height: 0;
+}
+
+.commentsList::-webkit-scrollbar {
+    width: 8px;
+}
+.commentsList::-webkit-scrollbar-thumb {
+    background-color: #5d5d5d;
+    border-radius: 10px;
+}
+.commentsList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.commentItemWrapper {
+    background: #ecdec9;
+    padding: 14px 16px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.commentAuthor {
+    font-weight: 700;
+    color: #111;
+    white-space: nowrap;
+}
+
+.commentText {
+    font-weight: 400;
+    color: #222;
+    line-height: 1.5;
+}
+
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    background: #fafaf7;
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: 1px solid #dfd5bd;
+}
+
+.commentInput {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: 400;
+    outline: none;
+}
+
+.commentInput::placeholder {
+    color: #a39e92;
+}
+
+.iconButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.sendIcon {
+    width: 24px;
+    height: 24px;
+}
+
+/* 닉네임 설정(바로 댓글 다는 사용자 한정) */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 300px;
+}
+
+.modalTitle {
+    margin: 0;
+    color: black;
+}
+
+.modalSubtitle {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.modalInput {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.modalButtonGroup {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.cancelButton {
+    padding: 8px 12px;
+    border: none;
+    background: #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.saveButton {
+    padding: 8px 12px;
+    border: none;
+    background: #333;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}

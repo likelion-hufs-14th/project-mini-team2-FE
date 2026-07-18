@@ -1,0 +1,103 @@
+/* 피드 전체 */
+.card {
+    padding: 30px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 220px;
+    box-sizing: border-box;
+    transition: transform 0.2s;
+    color: #333;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* 상단영역 (닉네임&타이머) */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.nickname {
+    color: #4a4a4a;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.timerBox {
+    border: 1px solid #ff3b00;
+    color: #ff3b00;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'SUIT Bold', sans-serif;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+}
+
+/* 본문 영역 */
+.content {
+    color: #111;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    font-family: 'KimjungchulScript-Regular', cursive;
+}
+
+/* 하단 좋아요/싫어요/댓글 */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reactionGroup {
+    display: flex;
+    gap: 16px;
+}
+
+.actionDisplay {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.actionIcon {
+    width: 24px;
+    height: 24px;
+}
+
+.actionText {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.commentBtn {
+    background: transparent;
+    border: 1px solid #8a8a8a;
+    border-radius: 4px;
+    padding: 6px 12px;
+    color: #333;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
