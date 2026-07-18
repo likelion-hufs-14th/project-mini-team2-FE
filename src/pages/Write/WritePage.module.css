@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(#3a2a1e, #17120f);
+  background: url("../../assets/detail_feed.png") center / cover no-repeat;
 }
 
 .title {
@@ -34,7 +34,7 @@
   background: transparent;
   resize: none;
   outline: none;
-  font-family: "Kim jung chul Script","Nanum Pen Script",cursive;
+  font-family: "KimjungchulScript-Regular", cursive;
   font-size: 1.6rem;
   line-height: 1.7;
   color: var(--color-paper-ink);
