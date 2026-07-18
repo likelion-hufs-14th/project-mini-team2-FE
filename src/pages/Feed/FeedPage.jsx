@@ -3,50 +3,54 @@ import FeedCard from './FeedCard';
 import styles from './FeedPage.module.css';
 import { getFeeds } from '../../apis/posts';
 import TopBar from '../../components/TopBar/TopBar';
-import memo from '../../assets/memo.png';
 import backIcon from '../../assets/back.png';
 
 export default function FeedPage() {
-    const [pageData, setPageData] = useState({ results: [], next: null });
+    const [pageData, setPageData] = useState({ results: [], next: null, previous: null });
     const [page, setPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
 
     // 피드 목록 불러오기
     useEffect(() => {
         const loadFeeds = async () => {
-            const data = await getFeeds(page);
-            setPageData(data);
+            setIsLoading(true);
+            try {
+                const data = await getFeeds(page);
+                setPageData(data || { results: [], next: null, previous: null });
+            } catch (error) {
+                console.error('데이터 불러오기 에러:', error);
+                setPageData({ results: [], next: null, previous: null });
+            } finally {
+                setIsLoading(false);
+            }
         };
         loadFeeds();
     }, [page]);
 
-    // 방문 기록 API
-    useEffect(() => {
-        /*
-        const recordVisit = async () => {
-            try {
-                await fetch('http://백엔드주소/feeds/visit/', { 
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-            } catch (error) {
-                console.error('방문 기록 전송 실패:', error);
-            }
-        };
-        recordVisit();
-        */
-    }, []);
+    const displayData = pageData.results || [];
 
-    // 화면 렌더링(그리드형태, 페이지네이션)
     return (
         <div className={styles.pageContainer}>
             <TopBar />
-            <div className={styles.feedGrid}>
-                {pageData.results.map((data) => (
-                    <FeedCard key={data.feed_id} data={data} />
-                ))}
-            </div>
+
+            {isLoading ? (
+                <div className={styles.loading}>로딩 중...</div>
+            ) : displayData.length === 0 ? (
+                <div className={styles.emptyState}>표시할 피드가 없습니다.</div>
+            ) : (
+                <div className={styles.feedGrid}>
+                    {displayData.map((data) => (
+                        <FeedCard key={data.feed_id} data={data} />
+                    ))}
+                </div>
+            )}
+
             <div className={styles.pagination}>
-                <button className={styles.pageButton} disabled={page === 1} onClick={() => setPage((prev) => prev - 1)}>
+                <button
+                    className={styles.pageButton}
+                    disabled={!pageData.previous || isLoading}
+                    onClick={() => setPage((prev) => prev - 1)}
+                >
                     <img src={backIcon} alt="이전" className={styles.arrowIcon} />
                 </button>
 
@@ -54,7 +58,7 @@ export default function FeedPage() {
 
                 <button
                     className={styles.pageButton}
-                    disabled={!pageData.next}
+                    disabled={!pageData.next || isLoading}
                     onClick={() => setPage((prev) => prev + 1)}
                 >
                     <img src={backIcon} alt="다음" className={`${styles.arrowIcon} ${styles.rotatedArrow}`} />

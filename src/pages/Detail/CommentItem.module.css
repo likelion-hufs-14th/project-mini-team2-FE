@@ -3,21 +3,23 @@
     display: flex;
     gap: 16px;
     padding: 16px;
-    background: #ecdec9;
+    background: var(--color-comment-bg);
     border-radius: 8px;
     margin-bottom: 10px;
 }
 
 /* 댓글 작성자 닉네임 */
 .nickname {
-    color: #9a9fab;
+    color: var(--color-sidebar-text);
     min-width: 80px;
     font-weight: 600;
+    font-family: var(--font-base);
 }
 
 /* 댓글 내용 */
 .content {
     margin: 0;
-    color: #5b5b5b;
+    color: var(--color-feed-text);
     line-height: 1.5;
+    font-family: var(--font-base);
 }

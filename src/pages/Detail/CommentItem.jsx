@@ -3,6 +3,8 @@ import styles from './CommentItem.module.css';
 
 // 개별 댓글 1개를 화면에 보여줌
 export default function CommentItem({ comment }) {
+    if (!comment) return null;
+
     const { nickname, content } = comment;
 
     return (

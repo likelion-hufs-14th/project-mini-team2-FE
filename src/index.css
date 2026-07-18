@@ -17,6 +17,7 @@
     --color-sort-btn: #ccb591; /* 정렬 버튼 */
     --color-comment-bg: #ecdec9; /* 댓글 배경 */
     --color-sidebar: #1a1d24; /* 사이드바 색상 */
+    --color-progress-bg: #1a1a1a; /* 게이지바 비공감색상 */
 
     /* 화면 색상 */
     --color-bg: #17120f; /* 전체 배경 */
@@ -30,6 +31,9 @@
 
     /* 폰트SUIT */
     --font-base: 'SUIT Variable', system-ui, sans-serif;
+
+    /* 메모 폰트 */
+    --font-script: 'KimjungchulScript-Regular', cursive;
 }
 
 * {

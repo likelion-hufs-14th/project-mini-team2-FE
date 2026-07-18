@@ -6,11 +6,15 @@ import detail from '../../assets/detail_feed.png';
 import memo from '../../assets/memo.png';
 import TopBar from '../../components/TopBar/TopBar';
 import Sidebar from '../../components/Sidebar/Sidebar';
+import CommentItem from './CommentItem';
 import { getFeedDetail, addFan, addWood, getComments, createComment } from '../../apis/posts';
 import backIcon from '../../assets/back.png';
 import goodIcon from '../../assets/good.png';
 import badIcon from '../../assets/bad.png';
 import sendIcon from '../../assets/send.png';
+
+import goodPressIcon from '../../assets/good_press.png';
+import badPressIcon from '../../assets/bad_press.png';
 
 export default function DetailPage() {
     const { id } = useParams();
@@ -28,6 +32,8 @@ export default function DetailPage() {
 
     const [showNicknameModal, setShowNicknameModal] = useState(false);
     const [tempNickname, setTempNickname] = useState('');
+
+    const [reactionType, setReactionType] = useState(null);
 
     // 초기데이터 불러오기
     useEffect(() => {
@@ -98,7 +104,6 @@ export default function DetailPage() {
 
     // 공감(좋아요) 버튼 클릭 이벤트
     const handleLike = async () => {
-        // 1. 닉네임 확인/설정
         let myNick = localStorage.getItem('my_nickname');
         if (!myNick) {
             const input = prompt('활동할 닉네임을 입력해주세요! (최대 6자)');
@@ -106,7 +111,7 @@ export default function DetailPage() {
             myNick = input.slice(0, 6);
             localStorage.setItem('my_nickname', myNick);
         }
-        // 2. 투표 횟수 제한 검사
+
         const likeKey = `like_${myNick}_${id}`;
         const dislikeKey = `dislike_${myNick}_${id}`;
         const currentLikes = parseInt(localStorage.getItem(likeKey) || 0);
@@ -114,24 +119,32 @@ export default function DetailPage() {
 
         if (currentDislikes > 0) return alert('이미 비공감을 누르셔서 공감을 누를 수 없습니다!');
         if (currentLikes >= 3) return alert('공감은 최대 3번까지만 가능합니다!');
-        // 3. 공감 데이터 업데이트
+
         localStorage.setItem(likeKey, currentLikes + 1);
 
-        const updatedData = await addFan(id);
-        setPost((prev) => ({ ...prev, ...updatedData }));
-        setLikes(updatedData.fan_cnt);
+        //클릭시 활성화 > 2초후 원상복구
+        setReactionType('fan');
+        setTimeout(() => {
+            setReactionType(null);
+        }, 2000);
 
-        // 4. 남은 시간 재계산
-        if (updatedData.expires_at) {
-            const safeExpires = updatedData.expires_at.replace(/-/g, '/').replace('T', ' ');
-            const newDate = new Date(safeExpires);
-            setTimeLeft(Math.max(0, Math.floor((newDate.getTime() - new Date().getTime()) / 1000)));
+        try {
+            const updatedData = await addFan(id);
+            setPost((prev) => ({ ...prev, ...updatedData }));
+            setLikes(updatedData?.fan_cnt !== undefined ? updatedData.fan_cnt : likes + 1);
+
+            if (updatedData.expires_at) {
+                const safeExpires = updatedData.expires_at.replace(/-/g, '/').replace('T', ' ');
+                const newDate = new Date(safeExpires);
+                setTimeLeft(Math.max(0, Math.floor((newDate.getTime() - new Date().getTime()) / 1000)));
+            }
+        } catch (error) {
+            console.error('공감 처리 실패:', error);
         }
     };
 
     // 비공감(싫어요) 버튼 클릭 이벤트
     const handleDislike = async () => {
-        // 1. 닉네임 확인/설정
         let myNick = localStorage.getItem('my_nickname');
         if (!myNick) {
             const input = prompt('활동할 닉네임을 입력해주세요! (최대 6자)');
@@ -139,7 +152,7 @@ export default function DetailPage() {
             myNick = input.slice(0, 6);
             localStorage.setItem('my_nickname', myNick);
         }
-        // 2. 투표 횟수 제한 검사
+
         const likeKey = `like_${myNick}_${id}`;
         const dislikeKey = `dislike_${myNick}_${id}`;
         const currentLikes = parseInt(localStorage.getItem(likeKey) || 0);
@@ -148,22 +161,30 @@ export default function DetailPage() {
         if (currentLikes > 0) return alert('이미 공감을 누르셔서 비공감을 누를 수 없습니다!');
         if (currentDislikes >= 3) return alert('비공감은 최대 3번까지만 가능합니다!');
 
-        // 3. 공감 데이터 업데이트
         localStorage.setItem(dislikeKey, currentDislikes + 1);
 
-        const updatedData = await addWood(id);
-        setPost((prev) => ({ ...prev, ...updatedData }));
-        setDislikes(updatedData.wood_cnt);
+        //클릭시 활성화 > 2초후 원상복구
+        setReactionType('wood');
+        setTimeout(() => {
+            setReactionType(null);
+        }, 2000);
 
-        // 4. 남은 시간 재계산
-        if (updatedData.expires_at) {
-            const safeExpires = updatedData.expires_at.replace(/-/g, '/').replace('T', ' ');
-            const newDate = new Date(safeExpires);
-            setTimeLeft(Math.max(0, Math.floor((newDate.getTime() - new Date().getTime()) / 1000)));
+        try {
+            const updatedData = await addWood(id);
+            setPost((prev) => ({ ...prev, ...updatedData }));
+            setDislikes(updatedData?.wood_cnt !== undefined ? updatedData.wood_cnt : dislikes + 1);
+
+            if (updatedData?.expires_at) {
+                const safeExpires = updatedData.expires_at.replace(/-/g, '/').replace('T', ' ');
+                const newDate = new Date(safeExpires);
+                setTimeLeft(Math.max(0, Math.floor((newDate.getTime() - new Date().getTime()) / 1000)));
+            }
+        } catch (error) {
+            console.error('비공감 처리 실패:', error);
         }
     };
 
-    // 댓글창 관련
+    // 댓글 토글 및 전송
     const handleToggleComments = () => {
         setShowComments(!showComments);
     };
@@ -177,27 +198,31 @@ export default function DetailPage() {
             return;
         }
 
-        const newComment = await createComment(id, inputText, userNick);
-        setComments([newComment, ...comments]);
-        setInputText('');
+        try {
+            const newComment = await createComment(id, inputText, userNick);
+            const commentToRender = newComment?.content ? newComment : { nickname: userNick, content: inputText };
+            setComments([commentToRender, ...comments]);
+            setInputText('');
+        } catch (error) {
+            console.error('댓글 작성 실패:', error);
+        }
     };
 
-    // 닉네임 저장용
+    // 닉네임 저장(바로피드로 갈수 있을 경우:임시)
     const handleSaveNickname = () => {
         if (!tempNickname.trim()) return alert('닉네임을 입력해주세요.');
         const slicedNick = tempNickname.trim().slice(0, 6);
         localStorage.setItem('my_nickname', slicedNick);
         setShowNicknameModal(false);
-        alert('닉네임이 설정되었습니다! 다시 전송 버튼을 눌러주세요.');
+        alert('닉네임이 설정되었습니다! 다시 시도해주세요.');
     };
 
-    // 공감&비공감 비율계산
+    // 게이지바 계산
     const totalVotes = likes + dislikes;
     const leftFillWidth = totalVotes === 0 ? 50 : (likes / totalVotes) * 100;
     const rightFillWidth = totalVotes === 0 ? 50 : (dislikes / totalVotes) * 100;
 
     return (
-        /* 화면렌더링(전체,상단,사이드,뒤로가기,메모,공감비율,댓글 및 닉네임) */
         <div className={styles.pageContainer} style={{ backgroundImage: `url(${detail})` }}>
             <TopBar onMenuClick={() => setIsSidebarOpen(true)} />
             <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
@@ -222,14 +247,22 @@ export default function DetailPage() {
                         <div className={styles.reactionRow}>
                             <div className={styles.reactionGroup}>
                                 <button className={styles.actionButton} onClick={handleLike}>
-                                    <img src={goodIcon} alt="좋아요" className={styles.buttonIcon} />
+                                    <img
+                                        src={reactionType === 'fan' ? goodPressIcon : goodIcon}
+                                        alt="좋아요"
+                                        className={styles.buttonIcon}
+                                    />
                                     <span className={styles.countText}>{likes}</span>
                                 </button>
                                 <button
                                     className={`${styles.actionButton} ${styles.dislikeButton}`}
                                     onClick={handleDislike}
                                 >
-                                    <img src={badIcon} alt="싫어요" className={styles.buttonIcon} />
+                                    <img
+                                        src={reactionType === 'wood' ? badPressIcon : badIcon}
+                                        alt="싫어요"
+                                        className={styles.buttonIcon}
+                                    />
                                     <span className={styles.countText}>{dislikes}</span>
                                 </button>
                             </div>
@@ -249,11 +282,8 @@ export default function DetailPage() {
                 {showComments && (
                     <div className={styles.commentsSection}>
                         <div className={styles.commentsList}>
-                            {comments.map((c, i) => (
-                                <div key={i} className={styles.commentItemWrapper}>
-                                    <strong className={styles.commentAuthor}>{c.nickname}</strong>
-                                    <span className={styles.commentText}>{c.content}</span>
-                                </div>
+                            {comments.map((c) => (
+                                <CommentItem key={c.cmt_id} comment={c} />
                             ))}
                         </div>
                         <div className={styles.inputWrapper}>
