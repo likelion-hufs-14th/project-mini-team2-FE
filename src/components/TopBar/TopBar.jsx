@@ -12,7 +12,7 @@ function TopBar() {
     return (
         <>
             <header className={styles.bar}>
-                <Link to={PATHS.START} className={styles.logo} aria-label="처음으로">
+                <Link to={PATHS.START} className={styles.logo}>
                     <img src={logoIcon} alt="INCINER" />
                 </Link>
 
@@ -20,7 +20,7 @@ function TopBar() {
                     본 서비스는 어떠한 데이터도 백업하지 않으며, 소각 즉시 서버에서 완전히 영구 삭제됩니다.
                 </p>
 
-                <button type="button" className={styles.menu} onClick={() => setMenuOpen(true)} aria-label="메뉴 열기">
+                <button type="button" className={styles.menu} onClick={() => setMenuOpen(true)}>
                     <img src={listIcon} alt="메뉴" />
                 </button>
             </header>
