@@ -35,7 +35,6 @@ function Sidebar({ open, onClose }) {
                         </NavLink>
                     ))}
                 </nav>
-
             </aside>
         </>
     );
