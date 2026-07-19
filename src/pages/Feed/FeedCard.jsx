@@ -4,21 +4,13 @@ import styles from './FeedCard.module.css';
 import goodIcon from '../../assets/good.png';
 import badIcon from '../../assets/bad.png';
 import memoImg from '../../assets/memo.png';
+import { calcTimeLeft, calcOpacity, formatTime } from '../../utils/time';
 
 export default function FeedCard({ data }) {
     const { feed_id, nickname, content, created_at, expires_at, fan_cnt, wood_cnt, comment_cnt } = data;
     const navigate = useNavigate();
 
-    // 남은시간 계산
-    const calculateRemainingSeconds = (expireString) => {
-        if (!expireString) return 0;
-        const safeExpires = expireString.replace(/-/g, '/').replace('T', ' ');
-        const date = new Date(safeExpires);
-        if (isNaN(date.getTime())) return 0;
-        return Math.max(0, Math.floor((date.getTime() - new Date().getTime()) / 1000));
-    };
-
-    const [timeLeft, setTimeLeft] = useState(() => calculateRemainingSeconds(expires_at));
+    const [timeLeft, setTimeLeft] = useState(() => calcTimeLeft(expires_at));
 
     // 남은시간 타이머
     useEffect(() => {
@@ -27,37 +19,8 @@ export default function FeedCard({ data }) {
         return () => clearInterval(timer);
     }, [timeLeft]);
 
-    // 투명도 계산
-    const calculateOpacity = () => {
-        if (!created_at || !expires_at) return 1;
-
-        const safeCreated = created_at.replace(/-/g, '/').replace('T', ' ');
-        const safeExpires = expires_at.replace(/-/g, '/').replace('T', ' ');
-
-        const createdTime = new Date(safeCreated).getTime();
-        const expiresTime = new Date(safeExpires).getTime();
-
-        if (isNaN(createdTime) || isNaN(expiresTime)) return 1;
-
-        const totalDuration = expiresTime - createdTime;
-        if (totalDuration <= 0) return 0;
-
-        let ratio = (timeLeft * 1000) / totalDuration;
-        return Math.max(0, Math.min(1, ratio));
-    };
-
     // 시간 초과시 소각 (화면에서 숨김)
     if (timeLeft <= 0) return null;
-
-    const formatTime = (seconds) => {
-        const h = Math.floor(seconds / 3600)
-            .toString()
-            .padStart(2, '0');
-        const m = Math.floor((seconds % 3600) / 60)
-            .toString()
-            .padStart(2, '0');
-        return `${h}H ${m}M`;
-    };
 
     // 공감 vs 비공감 비율 계산
     const totalReactions = (fan_cnt || 0) + (wood_cnt || 0);
@@ -69,7 +32,7 @@ export default function FeedCard({ data }) {
             className={styles.card}
             onClick={() => navigate(`/feed/${feed_id}`)}
             style={{
-                opacity: calculateOpacity(),
+                opacity: calcOpacity(created_at, expires_at, timeLeft),
                 backgroundImage: `url(${memoImg})`,
             }}
         >

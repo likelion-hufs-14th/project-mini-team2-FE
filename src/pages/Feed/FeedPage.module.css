@@ -34,22 +34,6 @@
     box-sizing: border-box;
 }
 
-/* 피드 카드 스타일 */
-.card {
-    background-image: url('../../assets/memo.png');
-    background-size: cover;
-    background-position: center;
-    padding: 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    box-sizing: border-box;
-    transition: transform 0.2s;
-}
-
 /* 화살표 아이콘 */
 .arrowIcon {
     width: 32px;
