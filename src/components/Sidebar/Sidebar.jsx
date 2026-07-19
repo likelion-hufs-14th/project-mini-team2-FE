@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { FiEdit3, FiList, FiBell, FiInfo } from 'react-icons/fi';
+import { FiEdit3, FiList } from 'react-icons/fi';
 import { PATHS } from '../../routes/paths';
 import backIcon from '../../assets/back.png';
 import styles from './Sidebar.module.css';
@@ -10,37 +10,32 @@ const MENU = [
 ];
 
 function Sidebar({ open, onClose }) {
+    let backdropClass = styles.backdrop;
+    let panelClass = styles.panel;
+
+    if (open) {
+        backdropClass = styles.backdrop + ' ' + styles.backdropOpen;
+        panelClass = styles.panel + ' ' + styles.panelOpen;
+    }
+
     return (
         <>
-            <div className={`${styles.backdrop} ${open ? styles.backdropOpen : ''}`} onClick={onClose} />
+            <div className={backdropClass} onClick={onClose} />
 
-            <aside className={`${styles.panel} ${open ? styles.panelOpen : ''}`}>
-                <button type="button" className={styles.close} onClick={onClose} aria-label="사이드바 닫기">
+            <aside className={panelClass}>
+                <button type="button" className={styles.close} onClick={onClose}>
                     <img src={backIcon} alt="닫기" />
                 </button>
 
                 <nav className={styles.nav}>
-                    {MENU.map(({ icon: Icon, label, to }) =>
-                        to ? (
-                            <NavLink key={label} to={to} className={styles.item} onClick={onClose}>
-                                <Icon className={styles.icon} />
-                                {label}
-                            </NavLink>
-                        ) : (
-                            <span key={label} className={`${styles.item} ${styles.disabled}`} title="준비 중">
-                                <Icon className={styles.icon} />
-                                {label}
-                            </span>
-                        )
-                    )}
+                    {MENU.map(({ icon: Icon, label, to }) => (
+                        <NavLink key={label} to={to} className={styles.item} onClick={onClose}>
+                            <Icon className={styles.icon} />
+                            {label}
+                        </NavLink>
+                    ))}
                 </nav>
 
-                <footer className={styles.footer}>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms &amp; Conditions</a>
-                    <a href="#">Cookie Policy</a>
-                    <a href="#">Contact</a>
-                </footer>
             </aside>
         </>
     );
