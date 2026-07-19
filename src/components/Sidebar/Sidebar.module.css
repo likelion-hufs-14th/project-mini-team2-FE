@@ -17,7 +17,6 @@
     top: 0;
     right: 0;
     width: 240px;
-    max-width: 80vw;
     height: 100dvh;
     background: var(--color-sidebar);
     transform: translateX(100%);
@@ -35,17 +34,13 @@
     background: transparent;
     border: none;
     padding: 0.75rem;
-    cursor: pointer;
 }
 .close img {
     width: 32px;
-    height: 32px;
     display: block;
 }
 
 .nav {
-    display: flex;
-    flex-direction: column;
     padding: 0.5rem 0;
 }
 
@@ -60,10 +55,6 @@
 }
 .item:hover {
     background: rgba(255, 255, 255, 0.05);
-}
-.item.disabled {
-    color: var(--color-text-muted);
-    cursor: default;
 }
 .icon {
     font-size: 1.15rem;
