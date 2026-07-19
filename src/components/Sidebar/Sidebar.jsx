@@ -34,13 +34,6 @@ function Sidebar({ open, onClose }) {
                         )
                     )}
                 </nav>
-
-                <footer className={styles.footer}>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms &amp; Conditions</a>
-                    <a href="#">Cookie Policy</a>
-                    <a href="#">Contact</a>
-                </footer>
             </aside>
         </>
     );

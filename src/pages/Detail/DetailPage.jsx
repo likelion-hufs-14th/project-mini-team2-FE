@@ -15,6 +15,9 @@ import sendIcon from '../../assets/send.png';
 
 import goodPressIcon from '../../assets/good_press.png';
 import badPressIcon from '../../assets/bad_press.png';
+import { calcTimeLeft, calcOpacity, formatTime } from '../../utils/time';
+
+const REACTION_LABEL = { fan: '공감', wood: '비공감' };
 
 export default function DetailPage() {
     const { id } = useParams();
@@ -45,14 +48,7 @@ export default function DetailPage() {
                 setLikes(feedData.fan_cnt);
                 setDislikes(feedData.wood_cnt);
                 setComments(commentsData);
-
-                if (feedData.expires_at) {
-                    const safeExpires = feedData.expires_at.replace(/-/g, '/').replace('T', ' ');
-                    const date = new Date(safeExpires);
-                    if (!isNaN(date.getTime())) {
-                        setTimeLeft(Math.max(0, Math.floor((date.getTime() - new Date().getTime()) / 1000)));
-                    }
-                }
+                setTimeLeft(calcTimeLeft(feedData.expires_at));
             } catch (error) {
                 console.error('데이터 로드 실패', error);
                 alert('존재하지 않거나 이미 소각된 기록입니다.');
@@ -76,109 +72,61 @@ export default function DetailPage() {
     }, [timeLeft, post, navigate]);
 
     // 투명도 계산
-    let memoOpacity = 1;
-    if (post?.created_at && post?.expires_at) {
-        const safeCreated = post.created_at.replace(/-/g, '/').replace('T', ' ');
-        const safeExpires = post.expires_at.replace(/-/g, '/').replace('T', ' ');
+    const memoOpacity =
+        post?.created_at && post?.expires_at ? calcOpacity(post.created_at, post.expires_at, timeLeft) : 1;
 
-        const createdTime = new Date(safeCreated).getTime();
-        const expiresTime = new Date(safeExpires).getTime();
-        const totalDuration = expiresTime - createdTime;
-
-        if (totalDuration > 0) {
-            const ratio = (timeLeft * 1000) / totalDuration;
-            memoOpacity = Math.max(0, Math.min(1, ratio));
-        }
-    }
-
-    // 시간 계산
-    const formatTime = (seconds) => {
-        const h = Math.floor(seconds / 3600)
-            .toString()
-            .padStart(2, '0');
-        const m = Math.floor((seconds % 3600) / 60)
-            .toString()
-            .padStart(2, '0');
-        return `${h}H ${m}M`;
-    };
-
-    // 공감(좋아요) 버튼 클릭 이벤트
-    const handleLike = async () => {
+    const getOrPromptNickname = () => {
         let myNick = localStorage.getItem('my_nickname');
         if (!myNick) {
             const input = prompt('활동할 닉네임을 입력해주세요! (최대 6자)');
-            if (!input) return;
+            if (!input) return null;
             myNick = input.slice(0, 6);
             localStorage.setItem('my_nickname', myNick);
         }
-        const likeKey = `like_${myNick}_${id}`;
-        const dislikeKey = `dislike_${myNick}_${id}`;
-        const currentLikes = parseInt(localStorage.getItem(likeKey) || 0);
-        const currentDislikes = parseInt(localStorage.getItem(dislikeKey) || 0);
+        return myNick;
+    };
 
-        if (currentDislikes > 0) return alert('이미 비공감을 누르셔서 공감을 누를 수 없습니다!');
-        if (currentLikes >= 3) return alert('공감은 최대 3번까지만 가능합니다!');
+    // 공감/비공감
+    const handleReaction = async (type) => {
+        const myNick = getOrPromptNickname();
+        if (!myNick) return;
 
-        localStorage.setItem(likeKey, currentLikes + 1);
+        const isFan = type === 'fan';
+        const oppositeType = isFan ? 'wood' : 'fan';
+        const myKey = `${type}_${myNick}_${id}`;
+        const oppositeKey = `${oppositeType}_${myNick}_${id}`;
 
-        //클릭시 활성화 > 2초후 원상복구
-        setReactionType('fan');
-        setTimeout(() => {
-            setReactionType(null);
-        }, 2000);
+        const currentCount = parseInt(localStorage.getItem(myKey) || 0);
+        const oppositeCount = parseInt(localStorage.getItem(oppositeKey) || 0);
+
+        if (oppositeCount > 0) {
+            return alert(`이미 ${REACTION_LABEL[oppositeType]}을 누르셔서 ${REACTION_LABEL[type]}을 누를 수 없습니다!`);
+        }
+        if (currentCount >= 3) {
+            return alert(`${REACTION_LABEL[type]}은 최대 3번까지만 가능합니다!`);
+        }
+
+        localStorage.setItem(myKey, currentCount + 1);
+
+        // 클릭시 활성화 > 2초후 원상복구
+        setReactionType(type);
+        setTimeout(() => setReactionType(null), 2000);
 
         try {
-            const updatedData = await addFan(id);
+            const updatedData = await (isFan ? addFan(id) : addWood(id));
             setPost((prev) => ({ ...prev, ...updatedData }));
-            setLikes(updatedData?.fan_cnt !== undefined ? updatedData.fan_cnt : likes + 1);
 
-            if (updatedData.expires_at) {
-                const safeExpires = updatedData.expires_at.replace(/-/g, '/').replace('T', ' ');
-                const newDate = new Date(safeExpires);
-                setTimeLeft(Math.max(0, Math.floor((newDate.getTime() - new Date().getTime()) / 1000)));
+            if (isFan) {
+                setLikes(updatedData?.fan_cnt !== undefined ? updatedData.fan_cnt : likes + 1);
+            } else {
+                setDislikes(updatedData?.wood_cnt !== undefined ? updatedData.wood_cnt : dislikes + 1);
             }
-        } catch (error) {
-            console.error('공감 처리 실패:', error);
-        }
-    };
-
-    // 비공감(싫어요) 버튼 클릭 이벤트
-    const handleDislike = async () => {
-        let myNick = localStorage.getItem('my_nickname');
-        if (!myNick) {
-            const input = prompt('활동할 닉네임을 입력해주세요! (최대 6자)');
-            if (!input) return;
-            myNick = input.slice(0, 6);
-            localStorage.setItem('my_nickname', myNick);
-        }
-        const likeKey = `like_${myNick}_${id}`;
-        const dislikeKey = `dislike_${myNick}_${id}`;
-        const currentLikes = parseInt(localStorage.getItem(likeKey) || 0);
-        const currentDislikes = parseInt(localStorage.getItem(dislikeKey) || 0);
-
-        if (currentLikes > 0) return alert('이미 공감을 누르셔서 비공감을 누를 수 없습니다!');
-        if (currentDislikes >= 3) return alert('비공감은 최대 3번까지만 가능합니다!');
-
-        localStorage.setItem(dislikeKey, currentDislikes + 1);
-
-        //클릭시 활성화 > 2초후 원상복구
-        setReactionType('wood');
-        setTimeout(() => {
-            setReactionType(null);
-        }, 2000);
-
-        try {
-            const updatedData = await addWood(id);
-            setPost((prev) => ({ ...prev, ...updatedData }));
-            setDislikes(updatedData?.wood_cnt !== undefined ? updatedData.wood_cnt : dislikes + 1);
 
             if (updatedData?.expires_at) {
-                const safeExpires = updatedData.expires_at.replace(/-/g, '/').replace('T', ' ');
-                const newDate = new Date(safeExpires);
-                setTimeLeft(Math.max(0, Math.floor((newDate.getTime() - new Date().getTime()) / 1000)));
+                setTimeLeft(calcTimeLeft(updatedData.expires_at));
             }
         } catch (error) {
-            console.error('비공감 처리 실패:', error);
+            console.error(`${REACTION_LABEL[type]} 처리 실패:`, error);
         }
     };
 
@@ -244,7 +192,7 @@ export default function DetailPage() {
                     <div>
                         <div className={styles.reactionRow}>
                             <div className={styles.reactionGroup}>
-                                <button className={styles.actionButton} onClick={handleLike}>
+                                <button className={styles.actionButton} onClick={() => handleReaction('fan')}>
                                     <img
                                         src={reactionType === 'fan' ? goodPressIcon : goodIcon}
                                         alt="좋아요"
@@ -254,7 +202,7 @@ export default function DetailPage() {
                                 </button>
                                 <button
                                     className={`${styles.actionButton} ${styles.dislikeButton}`}
-                                    onClick={handleDislike}
+                                    onClick={() => handleReaction('wood')}
                                 >
                                     <img
                                         src={reactionType === 'wood' ? badPressIcon : badIcon}
