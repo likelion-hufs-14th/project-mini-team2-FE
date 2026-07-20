@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopBar from '../../components/TopBar/TopBar';
-import { createFeed } from '../../apis/feeds';
+import { createFeed } from '../../apis/posts';
 import { getNickname } from '../../utils/nickname';
+import { createVisitLog } from '../../apis/posts';
 import redCircle from '../../assets/redcircle.png';
 import blueCircle from '../../assets/bluecircle.png';
 import firePaper from '../../assets/firepaper.png';
@@ -14,17 +15,37 @@ function WritePage() {
     const [text, setText] = useState('');
     const [burning, setBurning] = useState(false);
 
-    function handleBurn() {
+
+
+    // 소각 버튼
+    async function handleBurn() {
+        if (!text) {
+            window.alert('소각할 내용을 입력해주세요.');
+            return;
+        }
+
+
         setBurning(true);
+
+        try {
+            await createVisitLog();
+        } catch (error) {
+            console.log(error);
+        }
+
         setTimeout(() => navigate('/end'), 2000);
     }
 
-    // 피드 저장 글
+
+    // 피드 저장
     async function handleFeed() {
-        if (!text) return;
+        if (!text) {
+            window.alert('피드에 올릴 내용을 입력해주세요.');
+            return;
+        }
 
         try {
-            await createFeed({ nickname: getNickname(), content: text });
+            await createFeed(text, getNickname());
             navigate('/feed');
         } catch (error) {
             console.log(error);
