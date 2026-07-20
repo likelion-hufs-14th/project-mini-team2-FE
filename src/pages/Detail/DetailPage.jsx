@@ -76,12 +76,12 @@ export default function DetailPage() {
         post?.created_at && post?.expires_at ? calcOpacity(post.created_at, post.expires_at, timeLeft) : 1;
 
     const getOrPromptNickname = () => {
-        let myNick = localStorage.getItem('my_nickname');
+        let myNick = sessionStorage.getItem('my_nickname');
         if (!myNick) {
             const input = prompt('활동할 닉네임을 입력해주세요! (최대 6자)');
             if (!input) return null;
             myNick = input.slice(0, 6);
-            localStorage.setItem('my_nickname', myNick);
+            sessionStorage.setItem('my_nickname', myNick);
         }
         return myNick;
     };
@@ -96,8 +96,8 @@ export default function DetailPage() {
         const myKey = `${type}_${myNick}_${id}`;
         const oppositeKey = `${oppositeType}_${myNick}_${id}`;
 
-        const currentCount = parseInt(localStorage.getItem(myKey) || 0);
-        const oppositeCount = parseInt(localStorage.getItem(oppositeKey) || 0);
+        const currentCount = parseInt(sessionStorage.getItem(myKey) || 0);
+        const oppositeCount = parseInt(sessionStorage.getItem(oppositeKey) || 0);
 
         if (oppositeCount > 0) {
             return alert(`이미 ${REACTION_LABEL[oppositeType]}을 누르셔서 ${REACTION_LABEL[type]}을 누를 수 없습니다!`);
@@ -106,7 +106,7 @@ export default function DetailPage() {
             return alert(`${REACTION_LABEL[type]}은 최대 3번까지만 가능합니다!`);
         }
 
-        localStorage.setItem(myKey, currentCount + 1);
+        sessionStorage.setItem(myKey, currentCount + 1);
 
         // 클릭시 활성화 > 2초후 원상복구
         setReactionType(type);
@@ -138,7 +138,7 @@ export default function DetailPage() {
     const handleSendComment = async () => {
         if (!inputText.trim()) return;
 
-        let userNick = localStorage.getItem('my_nickname');
+        let userNick = sessionStorage.getItem('my_nickname');
         if (!userNick) {
             setShowNicknameModal(true);
             return;
@@ -158,7 +158,7 @@ export default function DetailPage() {
     const handleSaveNickname = () => {
         if (!tempNickname.trim()) return alert('닉네임을 입력해주세요.');
         const slicedNick = tempNickname.trim().slice(0, 6);
-        localStorage.setItem('my_nickname', slicedNick);
+        sessionStorage.setItem('my_nickname', slicedNick);
         setShowNicknameModal(false);
         alert('닉네임이 설정되었습니다! 다시 시도해주세요.');
     };
