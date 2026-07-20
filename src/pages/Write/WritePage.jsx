@@ -9,12 +9,13 @@ import blueCircle from '../../assets/bluecircle.png';
 import firePaper from '../../assets/firepaper.png';
 import styles from './WritePage.module.css';
 
+
 // 2) 작성 페이지
 function WritePage() {
     const navigate = useNavigate();
     const [text, setText] = useState('');
     const [burning, setBurning] = useState(false);
-    const [askName, setAskName] = useState(false);   // 닉네임 모달 열림/닫힘
+    const [askName, setAskName] = useState(false);
     const [tempName, setTempName] = useState('');     // 입력 중인 닉네임
 
 
@@ -25,7 +26,6 @@ function WritePage() {
             window.alert('소각할 내용을 입력해주세요.');
             return;
         }
-
 
         setBurning(true);
 
@@ -39,7 +39,7 @@ function WritePage() {
     }
 
 
-    // 피드 버튼: 닉네임 있으면 바로, 없으면 모달 열기
+    // 피드 버튼_닉네임 있는지 판단
     function handleFeed() {
         if (!text) {
             window.alert('피드에 올릴 내용을 입력해주세요.');
@@ -47,6 +47,7 @@ function WritePage() {
         }
 
         const name = getNickname();
+
         if (!name) {
             setAskName(true);
             return;
@@ -54,7 +55,7 @@ function WritePage() {
         sendFeed(name);
     }
 
-    // 실제로 서버에 보내기
+    // 메모 피드에 보내기
     async function sendFeed(name) {
         try {
             await createFeed(text, name);
@@ -65,13 +66,17 @@ function WritePage() {
         }
     }
 
-    // 모달에서 저장 눌렀을 때
+    // 닉네임 저장
     function handleSaveName() {
         const name = saveNickname(tempName);
+
         if (!name) return;
+
         setAskName(false);
         sendFeed(name);
     }
+
+
 
     return (
         <div className={styles.page}>
@@ -102,20 +107,23 @@ function WritePage() {
                 </button>
             </div>
 
+
             {burning && (
                 <div className={styles.burnOverlay}>
                     <img className={styles.burnPaper} src={firePaper} />
                 </div>
             )}
 
+
             {askName && (
                 <div className={styles.nameOverlay}>
                     <div className={styles.nameBox}>
-                        <h3 className={styles.nameTitle}>닉네임을 입력해주세요 (최대 6자)</h3>
+                        <h3 className={styles.nameTitle}>닉네임을 입력해주세요</h3>
                         <input
                             className={styles.nameInput}
                             maxLength={6}
                             value={tempName}
+                            placeholder="최대 6글자"
                             onChange={(e) => setTempName(e.target.value)}
                         />
                         <div className={styles.nameButtons}>
@@ -125,6 +133,8 @@ function WritePage() {
                     </div>
                 </div>
             )}
+
+
         </div>
     );
 }
