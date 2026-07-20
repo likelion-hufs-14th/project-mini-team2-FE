@@ -29,7 +29,9 @@ function StartPage() {
             const paperX = paper.x + paper.width / 2;
             const paperY = paper.y + paper.height / 2;
 
-            const isOnFire = paperX >= fire.left && paperX <= fire.right && paperY >= fire.top && paperY <= fire.bottom;
+            const isOnFire = 
+                paperX >= fire.left && paperX <= fire.right && 
+                paperY >= fire.top && paperY <= fire.bottom;
 
             if (isOnFire) {
                 navigate('/write');
