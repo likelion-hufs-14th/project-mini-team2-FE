@@ -1,9 +1,4 @@
-import axios from 'axios';
-
-// 백엔드 주소로 변경 예정.
-const BASE_URL = 'http://000';
-
-const api = axios.create({ baseURL: BASE_URL });
+import { api } from './client';
 
 async function request(promise, errorMsg) {
     try {
@@ -39,5 +34,5 @@ export const getComments = (feedId) => request(api.get(`/feeds/${feedId}/comment
 export const createComment = (feedId, content, nickname) =>
     request(api.post(`/feeds/${feedId}/comments/`, { content, nickname }), '댓글 작성 실패:');
 
-// 7. 방문 기록 생성
+// 7. 방문 기록 생성 (담당 화면 아님, 혹시 몰라 남겨둠)
 export const createVisitLog = () => request(api.post('/feeds/burn/'), '방문 기록 생성 실패:');
