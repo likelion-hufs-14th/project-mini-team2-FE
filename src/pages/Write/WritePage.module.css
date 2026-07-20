@@ -101,3 +101,68 @@
         transform: scale(0.8);
     }
 }
+
+
+.nameOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.nameBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 32px;
+    border-radius: 36px;
+    background: var(--color-sidebar);
+    width: 300px;
+    max-width: 80vw;
+    background: rgba(26, 29, 36, 0.9);
+}
+
+.nameTitle {
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--color-notice);
+    text-align: center;
+    padding: 3px 0;
+}
+
+.nameInput {
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--color-paper);
+    color: var(--color-paper-ink);
+    font-size: 1.1rem;
+    text-align: center;
+    outline: none;
+}
+
+.nameInput::placeholder {
+    font-size: 0.9rem;
+}
+
+.nameButtons {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.nameBtn {
+    flex: 1;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 36px;
+    background: var(--color-flame);
+    color: var(--color-time-bg);
+    font-size: 0.8rem;
+    cursor: pointer;
+}

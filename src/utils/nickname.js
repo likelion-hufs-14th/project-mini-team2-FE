@@ -1,15 +1,27 @@
-// 로그인이 없어서 닉네임을 프론트가 만들어 주기
-// 닉네임 = 6
+// 로그인이 없어서 닉네임을 프론트가 받아 주기
+// 닉네임 = 최대 6글자
+
+
+const KEY = "my_nickname";
 
 export function getNickname() {
-    const saved = localStorage.getItem('nickname');
+    return sessionStorage.getItem(KEY);
+}
 
-    if (saved) return saved;
+export function saveNickname(name) {
+    const clean = name.trim();
 
-    const number = Math.floor(Math.random() * 1000000);
+    if (!clean) {
+        window.alert("닉네임을 입력해주세요.");
+        return;
+    }
 
-    const nickname = String(number).padStart(6, '0');
+    if (clean.length > 6) {
+        window.alert("닉네임은 최대 6글자까지 가능합니다.");
+        return;
+    }
 
-    localStorage.setItem('nickname', nickname);
-    return nickname;
+    
+    sessionStorage.setItem(KEY, clean);
+    return clean;
 }
