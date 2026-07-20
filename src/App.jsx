@@ -6,7 +6,7 @@ import EndPage from './pages/End/EndPage';
 import FeedPage from './pages/Feed/FeedPage';
 import DetailPage from './pages/Detail/DetailPage';
 import NoticePage from './pages/Notice/NoticePage';
-import NoticeDetailPage from './pages/Notice/NoticeDetailPage';
+import NoticeDetailPage from './pages/Notice/NoticeDetailpage';
 
 function App() {
     return (
