@@ -37,5 +37,5 @@ export const createComment = (feedId, content, nickname) =>
 // 7. 소각 기록 남기기
 export const createVisitLog = () => request(api.post('/feeds/burn/'), '소각 기록 생성 실패:');
 
-// 8. 오늘 소각한 수 가져오기 ({ burn_cnt: 3 } 형태)
+// 8. 오늘 소각한 수 가져오기
 export const getBurnCount = () => request(api.get('/feeds/burn/'), '소각 수 조회 실패:');

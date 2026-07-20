@@ -9,7 +9,7 @@
 .title {
     margin-top: 20px;
     color: var(--color-notice);
-    font-size: 1.4rem;
+    font-size: var(--text-lg);
     font-weight: 700;
     text-align: center;
     padding: 0 16px;
@@ -17,7 +17,7 @@
 
 .paper {
     position: relative;
-    width: 420px;
+    width: 350px;
     max-width: 82vw;
     aspect-ratio: 1 / 1;
     margin-top: 24px;
@@ -32,7 +32,7 @@
     resize: none;
     outline: none;
     font-family: 'KimjungchulScript-Regular', cursive;
-    font-size: 1.6rem;
+    font-size: var(--text-xl);
     line-height: 1.7;
     color: var(--color-paper-ink);
 }
@@ -42,7 +42,7 @@
     right: 10%;
     bottom: 7%;
     color: #6b6157;
-    font-size: 1.1rem;
+    font-size: var(--text-md);
 }
 
 .actions {
@@ -53,12 +53,14 @@
 
 .circleBtn {
     position: relative;
-    width: 110px;
-    height: 110px;
+    width: 120px;
+    height: 120px;
     border: none;
     padding: 0;
     background: transparent;
-    cursor: pointer;
+    cursor: pointer;    
+    margin: 0 80px;
+
 }
 .circleBtn img {
     width: 100%;
@@ -72,7 +74,7 @@
     justify-content: center;
     color: #fff;
     font-weight: 700;
-    font-size: 1.3rem;
+    font-size: var(--text-lg);
 }
 
 .burnOverlay {
@@ -127,7 +129,7 @@
 }
 
 .nameTitle {
-    font-size: 1.0rem;
+    font-size: var(--text-base);
     font-weight: 700;
     color: var(--color-notice);
     text-align: center;
@@ -141,13 +143,13 @@
     border-radius: 8px;
     background: var(--color-paper);
     color: var(--color-paper-ink);
-    font-size: 1.1rem;
+    font-size: var(--text-md);
     text-align: center;
     outline: none;
 }
 
 .nameInput::placeholder {
-    font-size: 0.9rem;
+    font-size: var(--text-sm);
 }
 
 .nameButtons {
@@ -163,6 +165,6 @@
     border-radius: 36px;
     background: var(--color-flame);
     color: var(--color-time-bg);
-    font-size: 0.8rem;
+    font-size: var(--text-xs);
     cursor: pointer;
 }

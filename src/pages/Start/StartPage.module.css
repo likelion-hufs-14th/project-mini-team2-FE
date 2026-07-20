@@ -60,7 +60,7 @@
     border-radius: 10px;
     background-color: rgba(255, 116, 0, 0.4);
     color: #fff;
-    font-size: 1.2rem;
+    font-size: var(--text-md);
     font-weight: 500;
     white-space: nowrap;
     z-index: 3;

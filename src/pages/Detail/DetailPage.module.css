@@ -77,7 +77,7 @@
     margin-top: 5px;
     color: var(--color-feed-text);
     font-weight: 700;
-    font-size: 16px;
+    font-size: var(--text-base);
 }
 
 /* 남은 시간 배경 */
@@ -87,7 +87,7 @@
     color: var(--color-flame);
     padding: 4px 8px;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: var(--text-xs);
     font-family: var(--font-base);
     font-weight: 700;
     display: flex;
@@ -97,7 +97,7 @@
 
 .content {
     font-family: var(--font-script);
-    font-size: 18px;
+    font-size: var(--text-md);
     color: var(--color-feed-text);
     margin-top: 15px;
     line-height: 1.5;
@@ -134,7 +134,7 @@
 
 .countText {
     color: var(--color-feed-text);
-    font-size: 15px;
+    font-size: var(--text-sm);
     margin-left: 6px;
     font-weight: 600;
 }
@@ -145,7 +145,7 @@
     border: 1px solid var(--color-feed-text);
     border-radius: 6px;
     padding: 6px 12px;
-    font-size: 14px;
+    font-size: var(--text-sm);
     font-weight: bold;
     color: var(--color-feed-text);
     cursor: pointer;
@@ -237,7 +237,7 @@
     background: transparent;
     border: none;
     color: var(--color-feed-text);
-    font-size: 14px;
+    font-size: var(--text-sm);
     font-weight: 400;
     outline: none;
 }
@@ -291,7 +291,7 @@
 
 .modalSubtitle {
     margin: 0;
-    font-size: 14px;
+    font-size: var(--text-sm);
     color: #555;
 }
 
