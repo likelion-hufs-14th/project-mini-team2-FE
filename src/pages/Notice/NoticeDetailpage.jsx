@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import TopBar from '../../components/TopBar/TopBar';
-import styles from './NoticeDetailPage.module.css';
+import styles from './NoticeDetailpage.module.css';
 
 // 공지사항 상세
 function NoticeDetailPage() {
