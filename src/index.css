@@ -33,6 +33,15 @@
 
     /* 메모 폰트 */
     --font-script: 'KimjungchulScript-Regular', cursive;
+
+    /* 글자 크기 (7단계) */
+    --text-xs: 0.8rem;
+    --text-sm: 0.9rem;
+    --text-base: 1rem;
+    --text-md: 1.2rem;
+    --text-lg: 1.4rem;
+    --text-xl: 1.6rem;
+    --text-2xl: 2.6rem;
 }
 
 * {
