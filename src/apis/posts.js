@@ -1,8 +1,4 @@
-import axios from 'axios';
-
-const BASE_URL = 'https://tokplan.store';
-
-const api = axios.create({ baseURL: BASE_URL });
+import { api } from './client';
 
 async function request(promise, errorMsg) {
     try {
@@ -15,7 +11,8 @@ async function request(promise, errorMsg) {
 }
 
 // 1. 피드 목록 가져오기
-export const getFeeds = (page = 1) => request(api.get('/feeds/', { params: { page } }), '피드 목록 조회 실패:');
+export const getFeeds = (page = 1) =>
+    request(api.get('/feeds/', { params: { page, page_size: 12 } }), '피드 목록 조회 실패:');
 
 // 1-1. 메모지(피드) 작성하기
 export const createFeed = (content, nickname) =>
