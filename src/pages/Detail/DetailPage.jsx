@@ -37,6 +37,7 @@ export default function DetailPage() {
     const [tempNickname, setTempNickname] = useState('');
 
     const [reactionType, setReactionType] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     // 초기데이터 불러오기
     useEffect(() => {
@@ -147,7 +148,7 @@ export default function DetailPage() {
     };
 
     const handleSendComment = async () => {
-        if (!inputText.trim()) return;
+        if (!inputText.trim() || isSubmitting) return;
 
         let userNick = sessionStorage.getItem('my_nickname');
         if (!userNick) {
@@ -155,6 +156,7 @@ export default function DetailPage() {
             return;
         }
 
+        setIsSubmitting(true);
         try {
             const newComment = await createComment(id, inputText, userNick);
             const commentToRender = newComment?.content ? newComment : { nickname: userNick, content: inputText };
@@ -162,6 +164,8 @@ export default function DetailPage() {
             setInputText('');
         } catch (error) {
             console.error('댓글 작성 실패:', error);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -251,7 +255,7 @@ export default function DetailPage() {
                                 placeholder="의견을 남겨보세요. 많은 의견이 쌓일수록 더 오래 노출돼요."
                                 maxLength={50}
                             />
-                            <button className={styles.iconButton} onClick={handleSendComment}>
+                            <button className={styles.iconButton} onClick={handleSendComment} disabled={isSubmitting}>
                                 <img src={sendIcon} alt="전송" className={styles.sendIcon} />
                             </button>
                         </div>
