@@ -41,18 +41,29 @@ export default function DetailPage() {
     // 초기데이터 불러오기
     useEffect(() => {
         const fetchData = async () => {
+            // 1. 게시글 조회
+            let feedData;
             try {
-                const [feedData, commentsData] = await Promise.all([getFeedDetail(id), getComments(id)]);
-
-                setPost(feedData);
-                setLikes(feedData.fan_cnt);
-                setDislikes(feedData.wood_cnt);
-                setComments(commentsData);
-                setTimeLeft(calcTimeLeft(feedData.expires_at));
+                feedData = await getFeedDetail(id);
             } catch (error) {
-                console.error('데이터 로드 실패', error);
+                console.error('게시글 조회 실패', error);
                 alert('존재하지 않거나 이미 소각된 기록입니다.');
                 navigate('/feed', { replace: true });
+                return;
+            }
+
+            setPost(feedData);
+            setLikes(feedData.fan_cnt);
+            setDislikes(feedData.wood_cnt);
+            setTimeLeft(calcTimeLeft(feedData.expires_at));
+
+            // 2. 댓글 조회
+            try {
+                const commentsData = await getComments(id);
+                setComments(commentsData);
+            } catch (error) {
+                console.error('댓글 조회 실패', error);
+                setComments([]);
             }
         };
         fetchData();
