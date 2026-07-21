@@ -84,7 +84,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url('../../assets/backgroundfirepaper.png') center / cover no-repeat;
+    background: url('../../assets/backgroundpaperinfire.png') center / cover no-repeat;
     animation: burnFadeIn 0.6s ease;
 }
 
