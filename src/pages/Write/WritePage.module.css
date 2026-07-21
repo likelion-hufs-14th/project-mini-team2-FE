@@ -178,3 +178,9 @@
     font-size: var(--text-xs);
     cursor: pointer;
 }
+
+.circleBtn:disabled,
+.nameBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
