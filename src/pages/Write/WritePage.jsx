@@ -17,12 +17,14 @@ function WritePage() {
     const [burning, setBurning] = useState(false);
     const [askName, setAskName] = useState(false);
     const [tempName, setTempName] = useState('');     // 입력 중인 닉네임
+    const [sending, setSending] = useState(false);   // 전송 중인지
+
 
 
 
     // 소각 버튼
     async function handleBurn() {
-        if (!text) {
+        if (!text.trim()) {
             window.alert('소각할 내용을 입력해주세요.');
             return;
         }
@@ -41,7 +43,7 @@ function WritePage() {
 
     // 피드 버튼_닉네임 있는지 판단
     function handleFeed() {
-        if (!text) {
+        if (!text.trim()) {
             window.alert('피드에 올릴 내용을 입력해주세요.');
             return;
         }
@@ -57,12 +59,16 @@ function WritePage() {
 
     // 메모 피드에 보내기
     async function sendFeed(name) {
+        if (sending) return
+        setSending(true);
+
         try {
-            await createFeed(text, name);
+            await createFeed(text.trim(), name);
             navigate('/feed');
         } catch (error) {
             console.log(error);
             window.alert('피드에 올리지 못했어요. 서버를 확인해주세요.');
+            setSending(false);
         }
     }
 
@@ -96,12 +102,12 @@ function WritePage() {
             </div>
 
             <div className={styles.actions}>
-                <button className={styles.circleBtn} onClick={handleBurn}>
+                <button className={styles.circleBtn} onClick={handleBurn} disabled={burning}>
                     <img src={redCircle} />
                     <span>소각</span>
                 </button>
 
-                <button className={styles.circleBtn} onClick={handleFeed}>
+                <button className={styles.circleBtn} onClick={handleFeed} disabled={sending}>
                     <img src={blueCircle} />
                     <span>피드</span>
                 </button>
@@ -128,7 +134,9 @@ function WritePage() {
                         />
                         <div className={styles.nameButtons}>
                             <button className={styles.nameBtn} onClick={() => setAskName(false)}>취소</button>
-                            <button className={styles.nameBtn} onClick={handleSaveName}>저장</button>
+                            <button className={styles.nameBtn} onClick={handleSaveName} disabled={sending}>
+                                {sending ? '올리는 중...' : '저장'}
+                            </button>
                         </div>
                     </div>
                 </div>
