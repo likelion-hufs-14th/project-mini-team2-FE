@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopBar from '../../components/TopBar/TopBar';
 import { createFeed } from '../../apis/posts';
@@ -6,7 +6,8 @@ import { getNickname, saveNickname } from '../../utils/nickname';
 import { createVisitLog } from '../../apis/posts';
 import redCircle from '../../assets/redcircle.png';
 import blueCircle from '../../assets/bluecircle.png';
-import firePaper from '../../assets/firepaper.png';
+import paperInFire from '../../assets/paperinfire.png';
+import burnBg from '../../assets/backgroundpaperinfire.png';
 import styles from './WritePage.module.css';
 
 
@@ -18,6 +19,12 @@ function WritePage() {
     const [askName, setAskName] = useState(false);
     const [tempName, setTempName] = useState('');     // 입력 중인 닉네임
     const [sending, setSending] = useState(false);   // 전송 중인지
+
+
+    useEffect(() => {
+        new Image().src = paperInFire;
+        new Image().src = burnBg;
+    }, []);
 
 
 
@@ -116,7 +123,7 @@ function WritePage() {
 
             {burning && (
                 <div className={styles.burnOverlay}>
-                    <img className={styles.burnPaper} src={firePaper} />
+                    <img className={styles.burnPaper} src={paperInFire} />
                 </div>
             )}
 
