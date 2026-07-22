@@ -15,7 +15,7 @@ import sendIcon from '../../assets/send.png';
 
 import goodPressIcon from '../../assets/good_press.png';
 import badPressIcon from '../../assets/bad_press.png';
-import { calcTimeLeft, calcOpacity, formatTime } from '../../utils/time';
+import { calcTimeLeft, formatTime } from '../../utils/time';
 import { canReact } from '../../utils/reaction';
 
 export default function DetailPage() {

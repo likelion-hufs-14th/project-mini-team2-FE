@@ -68,7 +68,7 @@ export default function FeedCard({ data }) {
             className={styles.card}
             onClick={() => navigate(`/feed/${feed_id}`)}
             style={{
-                opacity: calcOpacity(created_at, expires_at, timeLeft),
+                opacity: calcOpacity(timeLeft),
                 backgroundImage: `url(${memoImg})`,
             }}
         >
