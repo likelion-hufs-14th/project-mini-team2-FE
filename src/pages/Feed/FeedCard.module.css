@@ -56,18 +56,23 @@
 }
 
 /* 본문 영역 */
+/* flex 늘어나는 역할은 래퍼가 담당.
+   .content가 직접 flex item이 되면 display:-webkit-box가 블록화되어
+   -webkit-line-clamp이 무시되므로 반드시 분리해야 함 */
+.contentBox {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    margin: 16px 0;
+}
+
 .content {
     color: var(--color-feed-text);
     font-family: var(--font-script);
     font-size: var(--text-base);
     line-height: 1.6;
-    margin: 16px 0;
-    flex-grow: 1;
-    overflow: hidden;
+    margin: 0;
     overflow-wrap: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
 }
 
 /* 하단 좋아요/싫어요/댓글 */
