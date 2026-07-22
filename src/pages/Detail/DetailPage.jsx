@@ -131,7 +131,7 @@ export default function DetailPage() {
         try {
             const newComment = await createComment(id, inputText, userNick);
             const commentToRender = newComment?.content ? newComment : { nickname: userNick, content: inputText };
-            setComments([commentToRender, ...comments]);
+            setComments([...comments, commentToRender]);
             setInputText('');
         } catch (error) {
             console.error('댓글 작성 실패:', error);
