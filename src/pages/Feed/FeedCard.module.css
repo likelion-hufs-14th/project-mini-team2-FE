@@ -64,6 +64,7 @@
     margin: 16px 0;
     flex-grow: 1;
     overflow: hidden;
+    overflow-wrap: break-word;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;

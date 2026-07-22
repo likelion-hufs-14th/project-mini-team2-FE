@@ -80,7 +80,9 @@ function WritePage() {
     }
 
     // 닉네임 저장
-    function handleSaveName() {
+    function handleSaveName(e) {
+        e.preventDefault();
+
         const name = saveNickname(tempName);
 
         if (!name) return;
@@ -88,7 +90,6 @@ function WritePage() {
         setAskName(false);
         sendFeed(name);
     }
-
 
 
     return (
@@ -130,22 +131,23 @@ function WritePage() {
 
             {askName && (
                 <div className={styles.nameOverlay}>
-                    <div className={styles.nameBox}>
+                    <form className={styles.nameBox} onSubmit={handleSaveName}>
                         <h3 className={styles.nameTitle}>닉네임을 입력해주세요</h3>
                         <input
                             className={styles.nameInput}
                             maxLength={6}
                             value={tempName}
                             placeholder="최대 6글자"
+                            
                             onChange={(e) => setTempName(e.target.value)}
                         />
                         <div className={styles.nameButtons}>
-                            <button className={styles.nameBtn} onClick={() => setAskName(false)}>취소</button>
-                            <button className={styles.nameBtn} onClick={handleSaveName} disabled={sending}>
+                            <button type='button' className={styles.nameBtn} onClick={() => setAskName(false)}>취소</button>
+                            <button type='submit' className={styles.nameBtn} disabled={sending}>
                                 {sending ? '올리는 중...' : '저장'}
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             )}
 

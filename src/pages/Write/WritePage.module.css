@@ -31,10 +31,11 @@
     background: transparent;
     resize: none;
     outline: none;
-    font-family: 'KimjungchulScript-Regular', cursive;
+    font-family: var(--font-script);
     font-size: var(--text-xl);
     line-height: 1.7;
     color: var(--color-paper-ink);
+    overflow-wrap: break-word;
 }
 
 .counter {

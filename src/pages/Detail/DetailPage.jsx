@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import styles from './DetailPage.module.css';
 
 import detail from '../../assets/detail_feed.png';
@@ -24,7 +24,9 @@ export default function DetailPage() {
 
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]);
-    const [showComments, setShowComments] = useState(false);
+    // 피드에서 댓글 버튼으로 들어오면 댓글창을 열어둔 채로 시작
+    const [searchParams] = useSearchParams();
+    const [showComments, setShowComments] = useState(searchParams.get('comments') === 'open');
 
     const [likes, setLikes] = useState(0);
     const [dislikes, setDislikes] = useState(0);
@@ -219,7 +221,10 @@ export default function DetailPage() {
                                 <CommentItem key={c.cmt_id} comment={c} />
                             ))}
                         </div>
-                        <div className={styles.inputWrapper}>
+                        <form className={styles.inputWrapper} onSubmit={(e) => {
+                            e.preventDefault();
+                            handleSendComment();
+                        }}>
                             <input
                                 className={styles.commentInput}
                                 value={inputText}
@@ -230,7 +235,7 @@ export default function DetailPage() {
                             <button className={styles.iconButton} onClick={handleSendComment} disabled={isSubmitting}>
                                 <img src={sendIcon} alt="전송" className={styles.sendIcon} />
                             </button>
-                        </div>
+                        </form>
                     </div>
                 )}
             </div>
