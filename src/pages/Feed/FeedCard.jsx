@@ -106,7 +106,13 @@ export default function FeedCard({ data }) {
                         
                     </div>
 
-                    <button className={styles.commentBtn} onClick={(e) => e.stopPropagation()}>
+                    <button
+                        className={styles.commentBtn}
+                        onClick={(e) => {
+                            e.stopPropagation(); // 카드 클릭 막고
+                            navigate(`/feed/${feed_id}?comments=open`); // 댓글 열린 채로 이동
+                        }}
+                    >
                         댓글 {comment_cnt || 0}
                     </button>
                 </div>
