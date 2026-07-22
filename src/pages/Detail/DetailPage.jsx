@@ -16,8 +16,7 @@ import sendIcon from '../../assets/send.png';
 import goodPressIcon from '../../assets/good_press.png';
 import badPressIcon from '../../assets/bad_press.png';
 import { calcTimeLeft, calcOpacity, formatTime } from '../../utils/time';
-
-const REACTION_LABEL = { fan: '공감', wood: '비공감' };
+import { canReact } from '../../utils/reaction';
 
 export default function DetailPage() {
     const { id } = useParams();
@@ -84,38 +83,11 @@ export default function DetailPage() {
     }, [timeLeft, post, navigate]);
 
 
-    const getOrPromptNickname = () => {
-        let myNick = sessionStorage.getItem('my_nickname');
-        if (!myNick) {
-            const input = prompt('활동할 닉네임을 입력해주세요! (최대 6자)');
-            if (!input) return null;
-            myNick = input.slice(0, 6);
-            sessionStorage.setItem('my_nickname', myNick);
-        }
-        return myNick;
-    };
-
     // 공감/비공감
     const handleReaction = async (type) => {
-        const myNick = getOrPromptNickname();
-        if (!myNick) return;
+        if (!canReact(id, type)) return;
 
         const isFan = type === 'fan';
-        const oppositeType = isFan ? 'wood' : 'fan';
-        const myKey = `${type}_${myNick}_${id}`;
-        const oppositeKey = `${oppositeType}_${myNick}_${id}`;
-
-        const currentCount = parseInt(sessionStorage.getItem(myKey) || 0);
-        const oppositeCount = parseInt(sessionStorage.getItem(oppositeKey) || 0);
-
-        if (oppositeCount > 0) {
-            return alert(`이미 ${REACTION_LABEL[oppositeType]}을 누르셔서 ${REACTION_LABEL[type]}을 누를 수 없습니다!`);
-        }
-        if (currentCount >= 3) {
-            return alert(`${REACTION_LABEL[type]}은 최대 3번까지만 가능합니다!`);
-        }
-
-        sessionStorage.setItem(myKey, currentCount + 1);
 
         // 클릭시 활성화 > 2초후 원상복구
         setReactionType(type);
@@ -135,7 +107,7 @@ export default function DetailPage() {
                 setTimeLeft(calcTimeLeft(updatedData.expires_at));
             }
         } catch (error) {
-            console.error(`${REACTION_LABEL[type]} 처리 실패:`, error);
+            console.error('공감/비공감 처리 실패:', error);
         }
     };
 
