@@ -159,7 +159,10 @@ export default function DetailPage() {
 
             <div className={styles.contentWrapper}>
                 <div className={styles.topNav}>
-                    <button className={styles.backButton} onClick={() => navigate('/feed')}>
+                    <button
+                        className={styles.backButton}
+                        onClick={() => (window.history.length > 1 ? navigate(-1) : navigate('/feed'))}
+                    >
                         <img src={backIcon} alt="뒤로가기" className={styles.backIcon} />
                     </button>
                 </div>
