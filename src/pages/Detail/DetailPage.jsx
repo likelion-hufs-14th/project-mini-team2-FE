@@ -83,9 +83,6 @@ export default function DetailPage() {
         return () => clearInterval(timer);
     }, [timeLeft, post, navigate]);
 
-    // 투명도 계산
-    const memoOpacity =
-        post?.created_at && post?.expires_at ? calcOpacity(post.created_at, post.expires_at, timeLeft) : 1;
 
     const getOrPromptNickname = () => {
         let myNick = sessionStorage.getItem('my_nickname');
@@ -195,7 +192,7 @@ export default function DetailPage() {
                     </button>
                 </div>
 
-                <div className={styles.memoContainer} style={{ backgroundImage: `url(${memo})`, opacity: memoOpacity }}>
+                <div className={styles.memoContainer} style={{ backgroundImage: `url(${memo})` }}>
                     <div>
                         <div className={styles.header}>
                             <h3 className={styles.nickname}>{post?.nickname || '로딩중...'}</h3>
