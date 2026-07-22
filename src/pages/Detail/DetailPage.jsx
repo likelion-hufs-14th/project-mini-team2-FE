@@ -193,7 +193,7 @@ export default function DetailPage() {
                 </div>
 
                 <div className={styles.memoContainer} style={{ backgroundImage: `url(${memo})` }}>
-                    <div>
+                    <div className={styles.memoheight}>
                         <div className={styles.header}>
                             <h3 className={styles.nickname}>{post?.nickname || '로딩중...'}</h3>
                             <div className={styles.timerBox}>🔥 {formatTime(timeLeft)}</div>

@@ -101,6 +101,26 @@
     color: var(--color-feed-text);
     margin-top: 15px;
     line-height: 1.5;
+    max-height: 200px;
+}
+
+.memoheight {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;   
+}
+
+.memoheight::-webkit-scrollbar {
+    width: 4px;
+}
+
+.memoheight::-webkit-scrollbar-track {
+    background: transparent;      /* 배경 없애서 종이 그대로 보이게 */
+}
+
+.memoheight::-webkit-scrollbar-thumb {
+    background: rgba(90, 80, 70, 0.35);   /* 잉크색 반투명 */
+    border-radius: 2px;
 }
 
 /*공감,비공감액션 & 게이지바 */
