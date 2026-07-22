@@ -77,7 +77,9 @@ export default function FeedCard({ data }) {
                 <div className={styles.timerBox}>🔥 {formatTime(timeLeft)}</div>
             </div>
 
-            <p className={styles.content}>{content}</p>
+            <div className={styles.contentBox}>
+                <p className={styles.content}>{content}</p>
+            </div>
 
             <div className={styles.footerWrapper}>
                 <div className={styles.footer}>
